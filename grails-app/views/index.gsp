@@ -2,76 +2,72 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+    <asset:stylesheet src="login.css"/>
+    %{--<asset:javascript src="login.js"/>--}%
     <title>Welcome to Grails</title>
 </head>
 <body>
-    <content tag="nav">
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Application Status <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#">Environment: ${grails.util.Environment.current.name}</a></li>
-                <li><a href="#">App profile: ${grailsApplication.config.grails?.profile}</a></li>
-                <li><a href="#">App version:
-                    <g:meta name="info.app.version"/></a>
-                </li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Grails version:
-                    <g:meta name="info.app.grailsVersion"/></a>
-                </li>
-                <li><a href="#">Groovy version: ${GroovySystem.getVersion()}</a></li>
-                <li><a href="#">JVM version: ${System.getProperty('java.version')}</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</a></li>
-            </ul>
-        </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Artefacts <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
-                <li><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
-                <li><a href="#">Services: ${grailsApplication.serviceClasses.size()}</a></li>
-                <li><a href="#">Tag Libraries: ${grailsApplication.tagLibClasses.size()}</a></li>
-            </ul>
-        </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Installed Plugins <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
-                    <li><a href="#">${plugin.name} - ${plugin.version}</a></li>
-                </g:each>
-            </ul>
-        </li>
-    </content>
+%{--<sec:ifNotLoggedIn>
+    <g:link controller='login' action='auth'>Login</g:link>
+</sec:ifNotLoggedIn>
 
-    <div class="svg" role="presentation">
-        <div class="grails-logo-container">
-            <asset:image src="grails-cupsonly-logo-white.svg" class="grails-logo"/>
+<sec:ifLoggedIn>
+    <a href="/logoff">Logout</a>
+</sec:ifLoggedIn>
+
+<sec:ifAnyGranted roles='ROLE_ADMIN'>
+   ERES ADMIN
+</sec:ifAnyGranted>--}%
+<div class="container" name="div_index" id="div_index" style="display: none">
+
+    <div class="row" id="pwd-container">
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+            <section class="login-form">
+                <g:if test='${flash.message}'>
+                    <div class="login_message">${flash.message}</div>
+                </g:if>
+                    <form action="${postUrl ?: '/login/authenticate'}" method="POST" id="loginForm" role="login" autocomplete="off">
+                        <img src="http://i.imgur.com/RcmcLv4.png" class="img-responsive" alt="" />
+                        %{--<label for="username"><g:message code='springSecurity.login.username.label'/>:</label>--}%
+                        <input type="text" placeholder="Ingrese Usuario" class="text_ form-control input-lg" name="${usernameParameter ?: 'username'}" id="username"/>
+                        %{--<label for="password"><g:message code='springSecurity.login.password.label'/>:</label>--}%
+                        <input type="password" placeholder="Ingrese Contraseña" class="text_ form-control input-lg" name="${passwordParameter ?: 'password'}" id="password"/>
+                        %{--<button type="submit" name="go" class="btn btn-lg btn-primary btn-block">Sign in</button>--}%
+                        <input type="submit" name="go" class="btn btn-lg btn-primary btn-block" id="submit" value="${message(code: 'springSecurity.login.button')}"/>
+                        <div>
+                            <a href="#">Create account</a> or <a href="#">reset password</a>
+                        </div>
+                    </form>
+                <div class="form-links">
+                    <a href="#">www.website.com</a>
+                </div>
+            </section>
         </div>
+        <div class="col-md-4"></div>
+
     </div>
 
-    <div id="content" role="main">
-        <section class="row colset-2-its">
-            <h1>Welcome to Grails</h1>
+</div>
+<script>
+    $( document ).ready(function(){
+        var URL="${createLink(controller:'securitySession',action:'isLoginSuccess')}"
+        $.ajax({
+            url: URL,
+            success: function(resp) {
+                if(resp == "true") {
+                    window.location.href = "/home";
+                } else {
+                    $("#div_index").show();
+                }
+            }
+        });
+    });
 
-            <p>
-                Congratulations, you have successfully started your first Grails application! At the moment
-                this is the default page, feel free to modify it to either redirect to a controller or display
-                whatever content you may choose. Below is a list of controllers that are currently deployed in
-                this application, click on each to execute its default action:
-            </p>
-
-            <div id="controllers" role="navigation">
-                <h2>Available Controllers:</h2>
-                <ul>
-                    <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-                        <li class="controller">
-                            <g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link>
-                        </li>
-                    </g:each>
-                </ul>
-            </div>
-        </section>
-    </div>
-
+    (function() {
+        document.forms['loginForm'].elements['${usernameParameter ?: 'username'}'].focus();
+    })();
+</script>
 </body>
 </html>
