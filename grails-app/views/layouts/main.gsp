@@ -10,8 +10,9 @@
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
 
     <asset:stylesheet src="application.css"/>
-    <asset:stylesheet src="fontawesome-free-5.1.1-web/css/all.css"/>
+    <asset:stylesheet src="fontawesome-free-5.1.1-web/css/all.min.css"/>
     <asset:javascript src="application.js"/>
+    <asset:javascript src="moment.min.js"/>
 
     <g:layoutHead/>
 </head>

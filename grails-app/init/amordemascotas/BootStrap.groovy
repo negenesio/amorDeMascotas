@@ -14,8 +14,8 @@ class BootStrap {
         def userRole = new Role('ROLE_USER').save()
         Date fechaNacimiento = Date.parse("yyyy-MM-dd", "1989-07-15")
         Date fechaNacimiento2 = Date.parse("yyyy-MM-dd", "1970-07-15")
-        def testUser = new User('me', 'password', "nico", "genesio", fechaNacimiento).save()
-        def adminUser = new User('admin', 'admin', 'administrator', 'administrator', fechaNacimiento2).save()
+        def testUser = new User('me', 'password', "nico genesio", "nicolas.genesio@gmail.com", fechaNacimiento).save()
+        def adminUser = new User('admin', 'administrator', 'admin administrator', "admin@amordemascotas.com", fechaNacimiento2).save()
 
         UserRole.create testUser, userRole
         UserRole.create adminUser, adminRole

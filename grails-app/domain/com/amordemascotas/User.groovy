@@ -13,8 +13,8 @@ class User implements Serializable {
 
     String username
     String password
-    String nombre
-    String apellido
+    String name
+    String email
     Date fechaNacimiento
     Date fechaCreacion
     boolean enabled = true
@@ -29,8 +29,8 @@ class User implements Serializable {
     static constraints = {
         password nullable: false, blank: false, password: true
         username nullable: false, blank: false, unique: true
-        nombre nullable: false, blank: false
-        apellido nullable: false, blank: false
+        name nullable: false, blank: false
+        email nullable: false, blank: false
         fechaNacimiento nullable: false, blank: false
     }
 
@@ -38,12 +38,12 @@ class User implements Serializable {
 	    password column: '`password`'
     }
 
-    User(String username, String password, String nombre, String apellido, Date fechaNacimiento) {
+    User(String username, String password, String name, String email, Date fechaNacimiento) {
         this()
         this.username = username
         this.password = password
-        this.nombre = nombre
-        this.apellido = apellido
+        this.name = name
+        this.email = email
         this.fechaNacimiento = fechaNacimiento
         this.fechaCreacion = new Date()
     }
