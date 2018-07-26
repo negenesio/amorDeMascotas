@@ -1,0 +1,91 @@
+@CHARSET "UTF-8";
+/*
+over-ride "Weak" message, show font in dark grey
+*/
+
+fieldset {
+    width: 450px;
+    margin-left: 30px;
+}
+
+.login-form{
+    background-color: #f8f9fa;
+    width: 600px;
+    margin-top: 20px;
+}
+
+i {
+    color: gray;
+}
+
+small.help-block{
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 90px;
+}
+
+.form-control-feedback.fa.fa-times {
+    color: red;
+    padding-left: 10px;
+    font-size: 25px;
+}
+div.form-group.has-feedback.has-error input {
+    border-color: #cd4025;
+}
+i.form-control-feedback.fas.fa-check {
+    color: #27bb79;
+    padding-left: 10px;
+    font-size: 25px;
+}
+
+#registration_form > div.form-group.has-feedback.has-error > small {
+    color: green;
+}
+
+div.input-group {
+    width: 550px;
+}
+
+legend {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 85px;
+}
+
+#registration_form > fieldset > div.form-group.has-feedback.has-success > div > i {
+    margin-top: 7px;
+}
+
+#registration_form > fieldset > div.form-group.has-feedback.has-error > div > i {
+    margin-top: 7px;
+}
+
+.form-control-feedback.fa.fa-clock {
+    color: #d4d400;
+    margin-top: 7px;
+    padding-left: 10px;
+    font-size: 25px;
+}
+
+.btn.btn-info.btn-block.login {
+    margin-left: 170px;
+}
+
+.link_home {
+    margin-left: 50px;
+    margin-top: 8px;
+}
+
+[type="date"] {
+    background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+}
+[type="date"]::-webkit-inner-spin-button {
+    display: none;
+}
+[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
