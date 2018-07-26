@@ -11,14 +11,17 @@ class UserController {
     def userEmailUserService
 
     @Secured('permitAll')
+    def registerUserIndex() {
+
+    }
+
+    @Secured('permitAll')
     def createUser() {
         println params;
-        User user = new User(params.username, params.password, params.name, params.email, Date.parse("yyyy-MM-dd", params.fecha_nacimiento));
-        boolean result = userService.createUser(user);
-
-        userEmailUserService.loadUserByUsername(user.username)
+        User result = userService.createUser(params.username_register, params.password_register, params.name, params.email, Date.parse("yyyy-MM-dd", params.fecha_nacimiento));
 
         if(result){
+            userEmailUserService.loadUserByUsername(result.username)
 
             return redirect(uri: "/home");
         } else {

@@ -46,7 +46,7 @@ data: function(validator) {
                             </span>
                         </center>
                     </label>
-                    <input  name="username" id="username" placeholder="Ingrese usuario" class="form-control col-md-6" type="text">
+                    <input  name="username_register" id="username_register" placeholder="Ingrese usuario" class="form-control col-md-6" type="text">
                 </div>
             </div>
 
@@ -78,7 +78,7 @@ data: function(validator) {
                 </div>
             </div>
 
-            <!-- Text input Correo Electronico-->
+            <!-- Text input E-mail-->
             <div class="form-group">
                 <div class="input-group">
                     <label class="col-md-3 control-label">
@@ -88,7 +88,7 @@ data: function(validator) {
                             </span>
                         </center>
                     </label>
-                    <input  name="email" id="email" placeholder="Ingrese Correo Electronico" class="form-control col-md-6" type="text">
+                    <input  name="email" id="email" placeholder="Ingrese E-Mail" class="form-control col-md-6" type="text">
                 </div>
             </div>
 
@@ -102,7 +102,7 @@ data: function(validator) {
                             </span>
                         </center>
                     </label>
-                    <input  name="password" id="password" placeholder="Ingrese Contraseña" class="form-control col-md-6" type="password">
+                    <input  name="password_register" id="password_register" placeholder="Ingrese Contraseña" class="form-control col-md-6" type="password">
                 </div>
             </div>
 
@@ -149,19 +149,20 @@ data: function(validator) {
                     window.location.href = "/home";
                 } else {
                     $("#div_index").show();
-                    $("#username").focus();
+                    $("#username_register").focus();
                 }
             }
         });
 
         $('#registration_form').bootstrapValidator({
+            live: 'disabled',
             feedbackIcons: {
                 valid: 'fas fa-check',
                 invalid: 'fa fa-times',
                 validating: 'fa fa-clock'
             },
             fields: {
-                username: {
+                username_register: {
                     validators: {
                         notEmpty: {
                             message: 'Ingrese un usuario valido.'
@@ -224,7 +225,7 @@ data: function(validator) {
                         }
                     }
                 },
-                password: {
+                password_register: {
                     validators: {
                         notEmpty: {
                             message: 'Ingrese su contraseña.'
@@ -242,7 +243,7 @@ data: function(validator) {
                 confirm_password: {
                     validators: {
                         identical: {
-                            field: 'password',
+                            field: 'password_register',
                             message:'Las contraseñas no coinciden.'
                         },
                         notEmpty: {

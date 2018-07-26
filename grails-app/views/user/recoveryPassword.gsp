@@ -11,7 +11,7 @@
 <body>
 
 <div id="div_recovery_password_user" name="div_recovery_password_user" class="container align-self-start login-form" style="display: block; justify-content: center; align-items: center">
-    <i id="tooltip_recovery_password_user" name="tooltip_recovery_password_user" style="margin-left: 510px; margin-top: 10px;" class="fa fa-info-circle fa-2x fa-pull-left col-md-6" data-toggle="tooltip" data-placement="left" title="¡Ingresa tu usuario o Correo electronico, para recibir un codigo de verificacion!"></i>
+    <i id="tooltip_recovery_password_user" name="tooltip_recovery_password_user" style="margin-left: 510px; margin-top: 10px;" class="fa fa-info-circle fa-2x fa-pull-left col-md-6" data-toggle="tooltip" data-placement="left" title="¡Ingresa tu usuario o E-Mail, para recibir un codigo de verificacion!"></i>
     <form action="${createLink(controller: 'user', action: 'recoveryPasswordGenerateToken')}" method="POST" id="recovery_password_form" role="login" autocomplete="off">
         <fieldset style="display: flex; justify-content: center; align-items: center">
 
@@ -58,7 +58,7 @@
 </div>
 
 <div id="div_recovery_password_token" name="div_recovery_password_token" class="container align-self-start login-form" style="display: none; justify-content: center; align-items: center">
-    <i id="tooltip_recovery_password_token" name="tooltip_recovery_password_token" style="margin-left: 520px; margin-top: 15px" class="fa fa-info-circle fa-2x" data-toggle="tooltip" data-placement="right" title="¡Hemos enviado el codigo a tu correo electronico!"></i>
+    <i id="tooltip_recovery_password_token" name="tooltip_recovery_password_token" style="margin-left: 520px; margin-top: 15px" class="fa fa-info-circle fa-2x" data-toggle="tooltip" data-placement="right" title="¡Hemos enviado el codigo a tu E-Mail!"></i>
     <form action="${createLink(controller: 'user', action: 'recoveryPasswordValidToken')}" method="POST" id="recovery_password_token_form" role="login" autocomplete="off">
         <fieldset style="display: flex; justify-content: center; align-items: center">
 
@@ -131,7 +131,7 @@
                             </span>
                         </center>
                     </label>
-                    <input  name="username_change" id="username_change" placeholder="Usuario / Correo Electronico." class="form-control col-md-6" type="text" readonly>
+                    <input  name="username_change" id="username_change" placeholder="Usuario / E-Mail." class="form-control col-md-6" type="text" readonly>
                 </div>
             </div>
 
@@ -314,7 +314,7 @@
         });*/
 
         $(function () {
-            $('#tooltip_recovery_password_user').tooltip('show')
+            $('#tooltip_recovery_password_user').tooltip('show');
         })
     });
 
