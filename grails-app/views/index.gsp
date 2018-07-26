@@ -3,8 +3,6 @@
 <head>
     <meta name="layout" content="main"/>
     <asset:stylesheet src="login.css"/>
-    <asset:javascript src="bootstrapvalidator.min.js"/>
-    <asset:stylesheet src="bootstrapvalidator.min.css"/>
     <title>Amor de Mascotas</title>
 </head>
 <body>

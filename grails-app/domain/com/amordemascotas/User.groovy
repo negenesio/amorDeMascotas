@@ -15,6 +15,7 @@ class User implements Serializable {
     String password
     String name
     String email
+    String token
     Date fechaNacimiento
     Date fechaCreacion
     boolean enabled = true
@@ -32,6 +33,7 @@ class User implements Serializable {
         name nullable: false, blank: false
         email nullable: false, blank: false
         fechaNacimiento nullable: false, blank: false
+        token nullable: true, blank: true
     }
 
     static mapping = {
@@ -46,5 +48,6 @@ class User implements Serializable {
         this.email = email
         this.fechaNacimiento = fechaNacimiento
         this.fechaCreacion = new Date()
+        this.token = null;
     }
 }

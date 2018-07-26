@@ -31,12 +31,65 @@ class UserController {
     def isUsernameOrEmailExists() {
 
         String username = params?.username;
-        String email = params?.email;
+        String email = params?.username;
+        boolean recoveryPassword = params?.recovery_password
+        User user = userService.getUserByUsernameOrEmail(username, email);
 
-        if(User.findByUsernameOrEmail(username, email)){
+        if(recoveryPassword) {
+            if(user) {
+                if(userService.generateNewToken(username, email)) {
+
+                    return render(["valid": true] as JSON);
+                } else {
+
+                    return false;
+                }
+            } else {
+
+                return render(["valid": false] as JSON)
+            }
+        }
+
+        if(!recoveryPassword && user){
             return render(["valid": false] as JSON);
         } else {
             return render(["valid": true] as JSON);
         }
     }
+
+    @Secured('isAnonymous()')
+    def recoveryPassword(){
+
+    }
+
+    @Secured('isAnonymous()')
+    def recoveryPasswordValidToken(){
+        println params
+        String token = params.token;
+        String username = params.username_valid_token;
+        if(userService.validToken(token, username)) {
+
+            return render('{"valid": true}');
+        } else {
+
+            return render('{"valid": false}');
+        }
+
+    }
+    @Secured('isAnonymous()')
+    def recoveryPasswordChange(){
+        String password = params.password_change
+        String username = params.username_password_change
+        String email = params.username_password_change
+
+        if(userService.changePassword(username, email, password)) {
+            userEmailUserService.loadUserByUsername(username)
+
+            return redirect(uri: "/home");
+        } else {
+
+            return redirect(uri: "/error");
+        }
+    }
+
 }
