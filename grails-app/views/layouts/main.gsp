@@ -9,10 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
 
+
     <asset:stylesheet src="application.css"/>
+    <asset:javascript src="popper.min.js"/>
     <asset:stylesheet src="fontawesome-free-5.1.1-web/css/all.min.css"/>
     <asset:javascript src="application.js"/>
     <asset:javascript src="moment.min.js"/>
+    <asset:javascript src="bootstrapvalidator.min.js"/>
+    <asset:stylesheet src="bootstrapvalidator.min.css"/>
 
     <g:layoutHead/>
 </head>

@@ -71,6 +71,7 @@
                         </center>
                     </label>
                     <input type="submit" class="btn btn-info btn-block form-control col-md-3" type="submit" value="Iniciar Sesion"/> <a href="/" class="link_home"> Registrarse</a>
+                    <label style="margin-left: 140px; margin-top: 15px"><a href="${createLink(controller: 'user', action: 'recoveryPassword')}">¿Has olvidado los datos de la cuenta?</a></label>
                 </div>
             </div>
 
