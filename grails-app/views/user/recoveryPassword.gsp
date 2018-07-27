@@ -35,7 +35,7 @@
                             </span>
                         </center>
                     </label>
-                    <input  name="username" id="username" placeholder="Ingrese Usuario / E-Mail" class="form-control col-md-6" type="text">
+                    <input  name="username_recovery" id="username_recovery" placeholder="Ingrese Usuario / E-Mail" class="form-control col-md-6" type="text">
                 </div>
             </div>
 
@@ -184,6 +184,7 @@
 
 <script>
     $(document).ready(function() {
+        $('#username_recovery').focus();
         var URLfindUser = "${createLink(controller:'user', action:'isUsernameOrEmailExists')}";
         $('#recovery_password_form').bootstrapValidator({
             live: 'disabled',
@@ -193,7 +194,7 @@
                 validating: 'fa fa-clock'
             },
             fields: {
-                username: {
+                username_recovery: {
                     validators: {
                         notEmpty: {
                             message: 'Ingrese su Usuario o Email.'
@@ -201,8 +202,11 @@
                         remote: {
                             type: 'GET',
                             url: URLfindUser,
-                            data: {
-                                recovery_password: 'true'
+                            data: function(validator) {
+                                return {
+                                    username: validator.getFieldElements('username_recovery').val(),
+                                    recovery_password: 'true'
+                                };
                             },
                             message: 'El usuario/e-mail no existe.',
                         }
@@ -214,9 +218,10 @@
                 $("#div_recovery_password_token").show();
                 $("#tooltip_recovery_password_token").tooltip('show');
                 $('#tooltip_recovery_password_user').tooltip('hide');
-                $('#username_valid_token').val($('#username').val());
-                $('#username_password_change').val($('#username').val());
-                $('#username_change').val($('#username').val());
+                $('#username_valid_token').val($('#username_recovery').val());
+                $('#username_password_change').val($('#username_recovery').val());
+                $('#username_change').val($('#username_recovery').val());
+                $('#token').focus();
                 //validator.defaultSubmit();
             }
         });
@@ -248,12 +253,13 @@
                     }
                 }
             },
-            message: 'El codigo ingresado es incorrecto.',
+            message: '',
             submitHandler: function(validator, form, submitButton) {
                 $("#div_recovery_password_token").hide();
                 $("#tooltip_recovery_password_token").hide();
                 $("#tooltip_recovery_password_change").tooltip('show');
                 $("#div_recovery_password_change").show();
+                $('#password_change').focus();
                 //validator.defaultSubmit();
             }
         });

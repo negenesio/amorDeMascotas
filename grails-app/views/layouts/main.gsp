@@ -23,7 +23,7 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-       <a href="#" style="color: gray"><div>
+       <a href="/conocer-plus" style="color: gray"><div>
             <i style="color:black" class="fa fa-paw fa-2x pull-left" aria-hidden="true"></i>
             <label style="font-size: 20px">Amor de</label>
            <label style="color: black; font-size: 25px"> Mascotas | </label></div></a>
@@ -33,34 +33,36 @@
         <sec:ifNotLoggedIn>
             <div style="padding-right: 50px" class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                        <li class="nav-item ${request.getRequestURL().toString().equals('http://localhost:8080/') ? 'active' : ''}">
-                            <a style="padding-left: 15px" class="nav-link " href="/">Registrarse<span class="sr-only">(current)</span></a>
+                        <li class="nav-item ${request.getRequestURL().toString().equals('http://localhost:8080/registration') ? 'active' : ''}">
+                            <a style="padding-left: 15px" class="nav-link " href="/registration">Registrarse<span class="sr-only">(current)</span></a>
                         </li>
-                        <li class="nav-item ${request.getRequestURL().toString().contains('http://localhost:8080/login/auth') ? 'active' : ''}">
-                            <a style="padding-left: 15px" class="nav-link" href="/login/auth">Iniciar Sesion</a>
+                        <li class="nav-item ${request.getRequestURL().toString().contains('http://localhost:8080/login') ? 'active' : ''}">
+                            <a style="padding-left: 15px" class="nav-link" href="/login">Iniciar Sesion</a>
                         </li>
-                        <li class="nav-item ${request.getRequestURL().toString().equals('http://localhost:8080/user/recoveryPassword') ? 'active' : ''}">
-                            <a style="padding-left: 15px" class="nav-link" href="/user/recoveryPassword">Recuperar Contraseña</a>
+                        <li class="nav-item ${request.getRequestURL().toString().equals('http://localhost:8080/recovery-password') ? 'active' : ''}">
+                            <a style="padding-left: 15px" class="nav-link" href="/recovery-password">Recuperar Contraseña</a>
                         </li>
 
-                        <li class="nav-item ${request.getRequestURL().toString().equals('http://localhost:8080/conocerPlus') ? 'active' : ''}">
-                            <a style="padding-left: 15px" class="nav-link" href="#">Conocer + <span class="sr-only">(current)</span></a>
+                    <li class="nav-item ${request.getRequestURL().toString().equals('http://localhost:8080/conocer-plus') ? 'active' : ''} ${request.getRequestURL().toString().equals('http://localhost:8080/') ? 'active' : ''} ">
+                        <a style="padding-left: 15px" class="nav-link" href="/conocer-plus">Conocer + <span class="sr-only">(current)</span></a>
                         </li>
                 </ul>
             </div>
         </sec:ifNotLoggedIn>
-    <g:if test="${request.getRequestURL().toString().contains('http://localhost:8080/login/auth')}">
+    <g:if test="${request.getRequestURL().toString().contains('http://localhost:8080/login')}">
 
     </g:if>
     <g:else>
     <sec:ifNotLoggedIn>
-        <form class="form-inline" action="/login/authenticate" method="POST">
-            <div class="form-group" style="justify-content: flex-end;align-items: flex-end;">
-                <input type="text" class="form-control" id="username" name="username" placeholder="Usuario/E-mail" style="margin-left: 5px; width: 25%">
-                <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" style="margin-left: 5px; width: 25%">
-                <input type="submit" class="btn btn-info" value="Iniciar Sesion" style="margin-left: 5px;">
-            </div>
-        </form>
+        <g:if test="${request.getRequestURL().toString() != 'http://localhost:8080/conocer-plus' && request.getRequestURL().toString() != 'http://localhost:8080/'}">
+            <form class="form-inline" action="/login/authenticate" method="POST">
+                <div class="form-group" style="justify-content: flex-end;align-items: flex-end;">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Usuario/E-mail" style="margin-left: 5px; width: 25%">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" style="margin-left: 5px; width: 25%">
+                    <input type="submit" class="btn btn-info" value="Iniciar Sesion" style="margin-left: 5px;">
+                </div>
+            </form>
+        </g:if>
     </sec:ifNotLoggedIn>
     </g:else>
         <sec:ifLoggedIn>

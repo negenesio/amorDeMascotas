@@ -33,8 +33,10 @@ class UserController {
     @Secured('permitAll')
     def isUsernameOrEmailExists() {
 
+        println params
         String username = params?.username;
         String email = params?.username;
+
         boolean recoveryPassword = params?.recovery_password
         User user = userService.getUserByUsernameOrEmail(username, email);
 
