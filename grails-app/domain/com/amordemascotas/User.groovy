@@ -16,6 +16,7 @@ class User implements Serializable {
     String name
     String email
     String token
+    String sexo
     Date fechaNacimiento
     Date fechaCreacion
     boolean enabled = true
@@ -40,7 +41,7 @@ class User implements Serializable {
 	    password column: '`password`'
     }
 
-    User(String username, String password, String name, String email, Date fechaNacimiento) {
+    User(String username, String password, String name, String email, Date fechaNacimiento, String sexo) {
         this()
         this.username = username
         this.password = password
@@ -49,5 +50,6 @@ class User implements Serializable {
         this.fechaNacimiento = fechaNacimiento
         this.fechaCreacion = new Date()
         this.token = null;
+        this.sexo = sexo;
     }
 }

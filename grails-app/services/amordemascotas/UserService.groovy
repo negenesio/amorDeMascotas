@@ -10,9 +10,9 @@ import grails.plugin.springsecurity.annotation.Secured
 class UserService {
 
     @Secured('permitAll')
-    User createUser(String username, String password, String name, String email, Date fechaNacimiento) {
+    User createUser(String username, String password, String name, String email, Date fechaNacimiento, String sexo) {
         try {
-            User user = new User(username, password, name, email, fechaNacimiento);
+            User user = new User(username, password, name, email, fechaNacimiento, sexo);
             user.save()
             Role role = Role.findByAuthority("ROLE_USER");
             UserRole.create(user, role).save()
@@ -20,7 +20,7 @@ class UserService {
 
             return user;
         } catch (Exception e) {
-            log.error(e)
+            log.error(e.getMessage())
 
             throw e;
         }

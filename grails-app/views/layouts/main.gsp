@@ -54,7 +54,6 @@
     </g:if>
     <g:else>
     <sec:ifNotLoggedIn>
-        <g:if test="${request.getRequestURL().toString() != 'http://localhost:8080/conocer-plus' && request.getRequestURL().toString() != 'http://localhost:8080/'}">
             <form class="form-inline" action="/login/authenticate" method="POST">
                 <div class="form-group" style="justify-content: flex-end;align-items: flex-end;">
                     <input type="text" class="form-control" id="username" name="username" placeholder="Usuario/E-mail" style="margin-left: 5px; width: 25%">
@@ -62,7 +61,6 @@
                     <input type="submit" class="btn btn-info" value="Iniciar Sesion" style="margin-left: 5px;">
                 </div>
             </form>
-        </g:if>
     </sec:ifNotLoggedIn>
     </g:else>
         <sec:ifLoggedIn>

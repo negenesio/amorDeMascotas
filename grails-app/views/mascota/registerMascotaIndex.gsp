@@ -153,11 +153,11 @@ data: function(validator) {
                     </label>
                     <div class="maxl">
                         <label class="radio inline">
-                            <input type="radio" name="sexo" value="femenino" checked>
+                            <input type="radio" name="sexo" value="femenino" id="sexo_femenino" checked>
                             <span> Femenino </span>
                         </label>
                         <label class="radio inline">
-                            <input type="radio" name="sexo" value="masculino">
+                            <input type="radio" name="sexo" id="sexo_masculino" value="masculino">
                             <span>Masculino </span>
                         </label>
                     </div>

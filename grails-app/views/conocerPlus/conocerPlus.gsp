@@ -112,7 +112,7 @@
 <div class="ui text container hero" style="height: 400px">
         <div style="margin-left: 20px; margin-top: 40px">
             <label style="color:white;margin-top: 50px;width: 300px;font-style: italic;">Nace una forma nueva de emprender amistades<p>Una web pensada especialente para nuestras Mascotas</p> </label>
-            <p><a href="/registration" style="color: white"><div class="btn btn-primary button">Empezar Ahora <i class="fa fa-arrow-right fa-1x"></i></div></a></p>
+            <p><a href="/registration" style="color: white"><div class="btn btn-info button">Empezar Ahora <i class="fa fa-arrow-right fa-1x"></i></div></a></p>
         </div>
 </div>
 <div class="container" style="width: 900px;">

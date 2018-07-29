@@ -18,7 +18,7 @@ class UserController {
     @Secured('permitAll')
     def createUser() {
         println params;
-        User result = userService.createUser(params.username_register, params.password_register, params.name, params.email, Date.parse("yyyy-MM-dd", params.fecha_nacimiento));
+        User result = userService.createUser(params.username_register, params.password_register, params.name, params.email, Date.parse("yyyy-MM-dd", params.fecha_nacimiento), params.sexo);
 
         if(result){
             userEmailUserService.loadUserByUsername(result.username)
@@ -26,7 +26,7 @@ class UserController {
             return redirect(uri: "/home");
         } else {
 
-            return render("ALGO FALLÓ");
+            return redirect(uri: "/error");
         }
     }
 
