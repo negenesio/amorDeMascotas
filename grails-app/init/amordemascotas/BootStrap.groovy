@@ -23,7 +23,7 @@ class BootStrap {
             it.clear()
         }
 
-        def razas = ["Affenpinscher", "Airedale Terrier", "Akita","Akita americano","Alaskan Husky","Alaskan Malamute",
+        def razas = ["Mestizo", "Affenpinscher", "Airedale Terrier", "Akita","Akita americano","Alaskan Husky","Alaskan Malamute",
                      "American Foxhound", "American pit bull terrier", "American staffordshire terrier", "Ariegeois",
                      "Artois", "Australian silky terrier", "Australian terrier", "Austrian Black & Tan Hound",
                      "Azawakh", "Balkan Hound", "Basenji", "Basset Alpino", "Basset Artesiano Normando",

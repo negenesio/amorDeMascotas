@@ -4,20 +4,26 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>
-        <g:layoutTitle default="Grails"/>
+        <g:layoutTitle default="Amor de Mascotas"/>
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <asset:stylesheet src="bootstrap.css"/>
+    <asset:stylesheet src="bootstrapvalidator.min.css"/>
+    <asset:stylesheet src="bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker.css"/>
+    <asset:stylesheet src="fontawesome-free-5.2.0-web/css/all.min.css"/>
+    <asset:stylesheet src="bootstrap-selectpicker.css"/>
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
 
-    <asset:stylesheet src="application.css"/>
+    <asset:javascript src="jquery.js"/>
     <asset:javascript src="popper.min.js"/>
-    <asset:stylesheet src="fontawesome-free-5.1.1-web/css/all.min.css"/>
-    <asset:javascript src="application.js"/>
+    <asset:javascript src="bootstrap.js"/>
     <asset:javascript src="moment.min.js"/>
     <asset:javascript src="bootstrapvalidator.min.js"/>
-    <asset:stylesheet src="bootstrapvalidator.min.css"/>
-
+    <asset:javascript src="bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js"/>
+    <asset:javascript src="bootstrap-selectpicker.js"/>
     <g:layoutHead/>
+
 </head>
 <body>
 
