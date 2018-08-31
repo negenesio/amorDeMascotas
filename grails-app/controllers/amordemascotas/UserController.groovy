@@ -33,7 +33,7 @@ class UserController {
     @Secured('permitAll')
     def isUsernameOrEmailExists() {
 
-        println params
+        println "isUsernameOrEmailExists: "+params;
         String username = params?.username;
         String email = params?.username;
 
@@ -69,7 +69,7 @@ class UserController {
 
     @Secured('isAnonymous()')
     def recoveryPasswordValidToken(){
-        println params
+        println "recoveryPasswordValidToken: "+params
         String token = params.token;
         String username = params.username_valid_token;
         if(userService.validToken(token, username)) {

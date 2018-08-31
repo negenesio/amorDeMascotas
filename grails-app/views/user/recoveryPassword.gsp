@@ -3,8 +3,6 @@
 <head>
     <meta name="layout" content="main"/>
     <asset:stylesheet src="login.css"/>
-    <asset:stylesheet src="bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css"/>
-    <asset:javascript src="bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"/>
     <title>Welcome to Grails</title>
 
 </head>
@@ -301,23 +299,6 @@
                 }
             }
         });
-
-
-    /*.on('success.form.bv', function(e) {
-            // Prevent form submission
-            e.preventDefault();
-
-            // Get the form instance
-            var $form = $(e.target);
-
-            // Get the BootstrapValidator instance
-            var bv = $form.data('bootstrapValidator');
-
-            // Use Ajax to submit form data
-            $.post($form.attr('action'), $form.serialize(), function(result) {
-                alert(result);
-            }, 'json');
-        });*/
 
         $(function () {
             $('#tooltip_recovery_password_user').tooltip('show');

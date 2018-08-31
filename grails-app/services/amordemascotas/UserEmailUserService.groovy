@@ -16,6 +16,7 @@ class UserEmailUserService extends GormUserDetailsService{
 
     UserDetails loadUserByUsername(String username, boolean loadRoles)
             throws UsernameNotFoundException {
+
         return loadUserByUsername(username)
     }
 
@@ -29,6 +30,7 @@ class UserEmailUserService extends GormUserDetailsService{
                 user.enabled, !user.accountExpired, !user.passwordExpired, !user.accountLocked, getAuthorities(user.getAuthorities()))
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities())
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         return userDetails
     }
 
@@ -37,6 +39,7 @@ class UserEmailUserService extends GormUserDetailsService{
         roles?.each { role ->
             authorities.add(new SimpleGrantedAuthority(role.authority))
         }
+
         return authorities
     }
 }
