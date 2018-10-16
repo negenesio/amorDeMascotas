@@ -36,26 +36,45 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+
+        <sec:ifLoggedIn>
+            <ul class="navbar-nav mr-auto">
+             <li class="nav-item ${request.getRequestURL().toString().contains('/home') ? 'active' : ''}">
+                <a style="padding-left: 15px" class="nav-link" href="/home"><b>Principal</b><span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item ${request.getRequestURL().toString().contains('/mascota/registrar') ? 'active' : ''}">
+                <a style="padding-left: 15px" class="nav-link" href="/mascota/registrar"><b>Crear Mascota</b><span class="sr-only">(current)</span></a>
+            </li>
+            <g:if test="${request.getRequestURL().toString().contains('/mascota/editarMascota')}">
+                <li class="nav-item ${request.getRequestURL().toString().contains('/mascota/editarMascota') ? 'active' : ''}">
+                    <a style="padding-left: 15px" class="nav-link" href="#"><b>Editar Mascota</b><span class="sr-only">(current)</span></a>
+                </li>
+            </g:if>
+            <li class="nav-item ${request.getRequestURL().toString().contains('/encuentro/index') ? 'active' : ''}">
+                <a style="padding-left: 15px" class="nav-link" href="/encuentro/index"><b>Encuentros</b><span class="sr-only">(current)</span></a>
+            </li>
+            </ul>
+        </sec:ifLoggedIn>
         <sec:ifNotLoggedIn>
             <div style="padding-right: 50px" class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                        <li class="nav-item ${request.getRequestURL().toString().equals('http://localhost:8080/registration') ? 'active' : ''}">
-                            <a style="padding-left: 15px" class="nav-link " href="/registration">Registrarse<span class="sr-only">(current)</span></a>
+                        <li class="nav-item ${request.getRequestURL().toString().contains('/registration') ? 'active' : ''}">
+                            <a style="padding-left: 15px" class="nav-link " href="/registration"><b>Registrarse</b><span class="sr-only">(current)</span></a>
                         </li>
-                        <li class="nav-item ${request.getRequestURL().toString().contains('http://localhost:8080/login') ? 'active' : ''}">
-                            <a style="padding-left: 15px" class="nav-link" href="/login">Iniciar Sesion</a>
+                        <li class="nav-item ${request.getRequestURL().toString().contains('/login') ? 'active' : ''}">
+                            <a style="padding-left: 15px" class="nav-link" href="/login"><b>Iniciar Sesion</b></a>
                         </li>
-                        <li class="nav-item ${request.getRequestURL().toString().equals('http://localhost:8080/recovery-password') ? 'active' : ''}">
-                            <a style="padding-left: 15px" class="nav-link" href="/recovery-password">Recuperar Contraseña</a>
+                        <li class="nav-item ${request.getRequestURL().toString().contains('/recovery-password') ? 'active' : ''}">
+                            <a style="padding-left: 15px" class="nav-link" href="/recovery-password"><b>Recuperar Contraseña</b></a>
                         </li>
 
-                    <li class="nav-item ${request.getRequestURL().toString().equals('http://localhost:8080/conocer-plus') ? 'active' : ''} ${request.getRequestURL().toString().equals('http://localhost:8080/') ? 'active' : ''} ">
-                        <a style="padding-left: 15px" class="nav-link" href="/conocer-plus">Conocer + <span class="sr-only">(current)</span></a>
+                    <li class="nav-item ${request.getRequestURL().toString().contains('/conocer-plus') ? 'active' : ''} ${request.getRequestURL().toString().contains('/index') ? 'active' : ''} ">
+                        <a style="padding-left: 15px" class="nav-link" href="/conocer-plus"><b>Conocer +</b><span class="sr-only">(current)</span></a>
                         </li>
                 </ul>
             </div>
         </sec:ifNotLoggedIn>
-    <g:if test="${request.getRequestURL().toString().contains('http://localhost:8080/login')}">
+    <g:if test="${request.getRequestURL().toString().contains('/login')}">
 
     </g:if>
     <g:else>

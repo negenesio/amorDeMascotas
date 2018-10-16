@@ -1,6 +1,6 @@
 package com.amordemascotas
 
-class Mascota {
+class Mascota implements Serializable {
 
     String nombre
     Raza raza
@@ -22,5 +22,6 @@ class Mascota {
 
     static constraints = {
         descripcion (nullable: true)
+        raza(unique : ['user', 'nombre', 'sexo', 'fechaNacimiento'])
     }
 }

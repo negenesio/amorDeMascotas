@@ -16,6 +16,13 @@ class UserController {
     }
 
     @Secured('permitAll')
+    def recuperarToken() {
+        println params
+
+        return render(view: "/user/recoveryPasswordToken", model:[username: params.username, token: params.token])
+    }
+
+    @Secured('permitAll')
     def createUser() {
         println params;
         User result = userService.createUser(params.username_register, params.password_register, params.name, params.email, Date.parse("yyyy-MM-dd", params.fecha_nacimiento), params.sexo);
@@ -32,7 +39,6 @@ class UserController {
 
     @Secured('permitAll')
     def isUsernameOrEmailExists() {
-
         println "isUsernameOrEmailExists: "+params;
         String username = params?.username;
         String email = params?.username;
@@ -81,6 +87,7 @@ class UserController {
         }
 
     }
+
     @Secured('isAnonymous()')
     def recoveryPasswordChange(){
         String password = params.password_change
@@ -95,6 +102,29 @@ class UserController {
 
             return redirect(uri: "/error");
         }
+    }
+
+    @Secured('isAnonymous()')
+    def sendToken() {
+        println params
+        User user = User.findByEmailOrUsername(params.username_recovery, params.username_recovery);
+
+        def result = userService.send(user);
+
+        return render(result);
+    }
+
+    @Secured('permitAll')
+    def email() {
+        Map user = [username: "nicolas", token: "token"]
+
+        return render(view: "/email/_email_token", model:[user:user]);
+    }
+
+    @Secured('permitAll')
+    def emailTest() {
+
+        return render(view: "/email/_email_token_test", model:[username: "nicolas", token: "123456"]);
     }
 
 }

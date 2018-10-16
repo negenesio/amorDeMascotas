@@ -6,6 +6,12 @@ class ConocerPlusController {
 
     @Secured('permitAll')
     def conocerPlus() {
+        redirect(mapping: "/index")
+    }
+
+    @Secured('permitAll')
+    def index() {
 
     }
+
 }

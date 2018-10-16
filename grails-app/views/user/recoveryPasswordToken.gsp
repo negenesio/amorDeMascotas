@@ -1,65 +1,17 @@
 <!doctype html>
+
 <html>
 <head>
     <meta name="layout" content="main"/>
     <asset:stylesheet src="login.css"/>
     <title>Welcome to Grails</title>
-
 </head>
 <body>
-
-<div id="div_recovery_password_user" name="div_recovery_password_user" class="container align-self-start login-form" style="display: block; justify-content: center; align-items: center">
-    <i id="tooltip_recovery_password_user" name="tooltip_recovery_password_user" style="margin-left: 510px; margin-top: 10px;" class="fa fa-info-circle fa-2x fa-pull-left col-md-6" data-toggle="tooltip" data-placement="left" title="¡Ingresa tu usuario o E-Mail, para recibir un codigo de verificacion!"></i>
-    <form action="${createLink(controller: 'user', action: 'recoveryPasswordGenerateToken')}" method="POST" id="recovery_password_form" role="login" autocomplete="off">
-        <fieldset style="display: flex; justify-content: center; align-items: center">
-
-            <!-- Form Name -->
-            <legend>
-                <i style="color:black" class="fa fa-paw fa-5x pull-left" aria-hidden="true"></i>
-                <label style="font-size: 20px">Amor de</label>
-                <label style="color: black; font-size: 25px"> Mascotas</label>
-            </legend>
-
-            <legend style="margin-bottom: 0px;">
-                <label style="font-size: 15px; margin-left: 80px; font-weight: bold;">Recuperacion de Contraseña</label>
-            </legend>
-            <!-- Text input Usuario-->
-            <div class="form-group">
-                <div class="input-group">
-                    <label class="col-md-3 control-label">
-                        <center>
-                            <span class="input-group-addon">
-                                <i class="fa fa-user fa-2x"></i>
-                            </span>
-                        </center>
-                    </label>
-                    <input  name="username_recovery" id="username_recovery" placeholder="Ingrese Usuario / E-Mail" class="form-control col-md-6" type="text">
-                </div>
-            </div>
-
-            <!-- Button input -->
-            <div class="form-group">
-                <div class="input-group">
-                    <label class="col-md-3 control-label">
-                        <center>
-                            <span class="input-group-addon">
-
-                            </span>
-                        </center>
-                    </label>
-                    <input type="submit" id="submit_form" name="submit_form" class="btn btn-info btn-block form-control col-md-5" type="submit" value="Continuar" style="margin-left: 25px;"/>
-                </div>
-            </div>
-
-        </fieldset>
-    </form>
-</div>
-
-<div id="div_recovery_password_token" name="div_recovery_password_token" class="container align-self-start login-form" style="display: none; justify-content: center; align-items: center">
+<div id="div_recovery_password_token" name="div_recovery_password_token" class="container align-self-start login-form" style="display: block; justify-content: center; align-items: center">
     <i id="tooltip_recovery_password_token" name="tooltip_recovery_password_token" style="margin-left: 520px; margin-top: 15px" class="fa fa-info-circle fa-2x" data-toggle="tooltip" data-placement="right" title="¡Hemos enviado el codigo a tu E-Mail!"></i>
     <form action="${createLink(controller: 'user', action: 'recoveryPasswordValidToken')}" method="POST" id="recovery_password_token_form" role="login" autocomplete="off">
         <fieldset style="display: flex; justify-content: center; align-items: center">
-
+            <input type="hidden" name="username_recovery" id="username_recovery" value="${username}" class="form-control col-md-6" type="text">
             <!-- Form Name -->
             <legend>
                 <i style="color:black" class="fa fa-paw fa-5x pull-left" aria-hidden="true"></i>
@@ -80,7 +32,7 @@
                             </span>
                         </center>
                     </label>
-                    <input  name="token" id="token" placeholder="Ingrese el codigo de seguridad." class="form-control col-md-6" type="text">
+                    <input  name="token" id="token" value="${token}" class="form-control col-md-6" type="text">
                 </div>
             </div>
 
@@ -95,7 +47,7 @@
                         </center>
                     </label>
                     <input type="submit" id="submit_token_form" name="submit_token_form" class="btn btn-info btn-block form-control col-md-5" type="submit" value="Continuar" style="margin-left: 25px;"/>
-                    <input type="hidden" name="username_valid_token" id="username_valid_token" class="form-control" required/>
+                    <input type="hidden" name="username_valid_token" id="username_valid_token" value="${username}" class="form-control" required/>
                 </div>
             </div>
 
@@ -129,7 +81,7 @@
                             </span>
                         </center>
                     </label>
-                    <input  name="username_change" id="username_change" placeholder="Usuario / E-Mail." class="form-control col-md-6" type="text" readonly>
+                    <input  name="username_change" id="username_change" value="${username}" class="form-control col-md-6" type="text" readonly>
                 </div>
             </div>
 
@@ -172,17 +124,17 @@
                         </center>
                     </label>
                     <input type="submit" id="submit_change_form" name="submit_change_form" class="btn btn-info btn-block form-control col-md-5" type="submit" value="Continuar" style="margin-left: 25px;"/>
-                    <input type="hidden" name="username_password_change" id="username_password_change" class="form-control"/>
+                    <input type="hidden" name="username_password_change" id="username_password_change" value="${username}" class="form-control"/>
                 </div>
             </div>
 
         </fieldset>
     </form>
 </div>
+<i class="fa fa-refresh fa-spin fa-3x fa-fw margin-bottom"></i>
 
 <script>
     function sendEmail() {
-
         var URLSendEmail = "${createLink(controller:'user', action:'sendToken')}";
         $.ajax({
             url: URLSendEmail,
@@ -190,14 +142,14 @@
                 'username_recovery': $("#username_recovery").val()
             },
             success: function (resp) {
-                //alert(resp);
+                alert(resp);
             }
         });
     }
 
     $(document).ready(function() {
-
-        $('#username_recovery').focus();
+        $("#tooltip_recovery_password_token").tooltip('show');
+        $('#token').focus();
         var URLfindUser = "${createLink(controller:'user', action:'isUsernameOrEmailExists')}";
         $('#recovery_password_form').bootstrapValidator({
             live: 'disabled',
@@ -232,8 +184,6 @@
                 sendEmail();
                 $("#tooltip_recovery_password_token").tooltip('show');
                 $('#tooltip_recovery_password_user').tooltip('hide');
-                $('#username_valid_token').val($('#username_recovery').val());
-                $('#username_password_change').val($('#username_recovery').val());
                 $('#username_change').val($('#username_recovery').val());
                 $('#token').focus();
                 //validator.defaultSubmit();
@@ -322,6 +272,5 @@
     });
 
 </script>
-
 </body>
 </html>

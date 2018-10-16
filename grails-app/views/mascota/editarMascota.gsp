@@ -11,7 +11,7 @@
         margin-right: 70px;
     }
 
-    #mascota_registration_form > div:nth-child(1) > div > div:nth-child(5) > div > i {
+    #mascota_update_form > div:nth-child(1) > div > div:nth-child(5) > div > i {
         margin-right: 115px;
     }
     .dropdown.bootstrap-select.form-control {
@@ -22,7 +22,7 @@
         width: 270px;
     }
 
-    #mascota_registration_form > div:nth-child(1) > div > div:nth-child(5) > div > div > button {
+    #mascota_update_form > div:nth-child(1) > div > div:nth-child(5) > div > div > button {
         width: 270px;
     }
 
@@ -46,7 +46,7 @@
         text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
     }
 
-    #mascota_registration_form > div > div:nth-child(5) > div > div
+    #mascota_update_form > div > div:nth-child(5) > div > div
 
     .datepicker .datepicker-switch {
         width: 200px;
@@ -73,13 +73,13 @@
         display: none;
     }
 
-    #mascota_registration_form > div > div > div:nth-child(7) > div > div > button {
+    #mascota_update_form > div > div > div:nth-child(7) > div > div > button {
         width: 65%;
     }
-    #mascota_registration_form > div > div > div:nth-child(7) > div > div {
+    #mascota_update_form > div > div > div:nth-child(7) > div > div {
         max-width: 412px;
     }
-    #mascota_registration_form > div > div > div:nth-child(7) > div > i {
+    #mascota_update_form > div > div > div:nth-child(7) > div > i {
         margin-left: -142px;
     }
 
@@ -149,7 +149,10 @@
 </head>
 <body>
 
-<form action="${createLink(controller:'mascota', action:'crearMascota')}" id="mascota_registration_form" name="mascota_registration_form">
+<form action="${createLink(controller:'mascota', action:'actualizarMascota')}" id="mascota_update_form" name="mascota_update_form" method="POST" enctype="multipart/form-data">
+    <input type="file" name="images1" id="images1" class="fileUpload" enctype="multipart/form-data" />
+    <input type="file" name="images2" id="images2" class="fileUpload" enctype="multipart/form-data" />
+    <input type="hidden" name="mascotaUpdateId" value="${mascota.id}"/>
     <div class="tab">
             <div class="mx-auto" style="width: 500px; background-color: #f8f9fa; margin-top: 20px">
                 <!-- Form Name -->
@@ -158,7 +161,7 @@
                     <label style="font-size: 20px">Amor de</label>
                     <label style="color: black; font-size: 25px"> Mascotas</label>
                 </legend>
-                <center><div id="duplicado" name="duplicado" style="color: red; display: none"> La mascota ya existe, prueba cargando una diferente.</div></center>
+                <center><div id="duplicado" name="duplicado" style="color: red; display: none"> La mascota que intentas actulizar ya existe, revisa los datos.</div></center>
                 <p></p>
                 <!-- Text input Mascota Nombre-->
                 <div class="form-group">
@@ -170,7 +173,7 @@
                                 </span>
                             </center>
                         </label>
-                        <input  name="mascota_name" id="mascota_name" placeholder="Nombre de Mascota" class="form-control col-md-6" type="text" required>
+                        <input  name="mascota_name" id="mascota_name" placeholder="Nombre de Mascota" class="form-control col-md-6" type="text" value="${mascota.nombre}" required>
                     </div>
                 </div>
 
@@ -185,7 +188,7 @@
                             </center>
                         </label>
                         <span class="input-group-text" id="open-datepicker"><i class="fa fa-calendar"></i></span>
-                        <input class="form-control col-md-5" id="mascota_fecha_nacimiento" name="mascota_fecha_nacimiento" placeholder="Año Nacimiento" autocomplete="off" type="text" required>
+                        <input class="form-control col-md-5" id="mascota_fecha_nacimiento" name="mascota_fecha_nacimiento" placeholder="Año Nacimiento" autocomplete="off" type="text" value="${mascota.fechaNacimiento.format("YYYY")}" required>
                     </div>
                 </div>
 
@@ -249,83 +252,108 @@
                                 </span>
                             </center>
                         </label>
-                        <textarea style="height: 120px; width: 270px; flex: none" placeholder="Ingrese una descripcion de su mascota." name="descripcion" maxlength="140" class="form-control" id="exampleTextarea" rows="3" onkeyup="countChar(this)" name="descripcion"></textarea>
+                        <textarea style="height: 120px; width: 270px; flex: none" placeholder="Ingrese una descripcion de su mascota." name="descripcion" id="descripcion" maxlength="140" class="form-control" id="exampleTextarea" rows="3" onkeyup="countChar(this)" name="descripcion"></textarea>
                     </div>
                 </div>
 
+                <center><div id="titleImagen" name="titleImagen" style="font-size: 20px;color: black;"> Tambien puedes actulizar las imagenes.</div></center>
+                <g:if test="${imagenes[0].nombre == 'default'}">
+                    <div class="uploaded_image col s11  m10 l3 "  style="margin-left: 180px" >
+                        <div class="form-group" style="height: 150px">
+                            <div class="input-group">
+                                <img  src="${createLink(controller: 'imagenes', action: 'viewImage', params: ['id': imagenes[0].id])}"  alt="add a photo" id="img1" name="img1" class="imageUpload">
+                            </div>
+                        </div>
+                    </div>
+                </g:if>
+                <g:else>
+                    <div class="uploaded_image col s11  m10 l3 "  style="margin-left: 180px" >
+                        <div class="form-group" style="height: 150px">
+                            <div class="input-group">
+                                <img  src="${createLink(controller: 'imagenes', action: 'viewImage', params: ['id': imagenes[0].id])}"  alt="add a photo" id="img1" name="img1" class="ImageOnPreview">
+                            </div>
+                        </div>
+                    </div>
+                </g:else>
+                <g:if test="${imagenes[1].nombre == 'default'}">
+                    <div class="uploaded_image col s11  m10 l3 "  style="margin-left: 180px" >
+                        <div class="form-group" style="height: 150px">
+                            <div class="input-group">
+                                <img  src="${createLink(controller: 'imagenes', action: 'viewImage', params: ['id': imagenes[1].id])}"  alt="add a photo" id="img2" name="img2" class="imageUpload">
+                            </div>
+                        </div>
+                    </div>
+                </g:if>
+                <g:else>
+                    <div class="uploaded_image col s11  m10 l3 "  style="margin-left: 180px" >
+                        <div class="form-group" style="height: 150px">
+                            <div class="input-group">
+                                <img  src="${createLink(controller: 'imagenes', action: 'viewImage', params: ['id': imagenes[1].id])}"  alt="add a photo" id="img2" name="img2" class="ImageOnPreview">
+                            </div>
+                        </div>
+                    </div>
+                </g:else>
                 <!-- Button input -->
-                <div class="form-group">
+                <div class="form-group" style="margin-top: -40px;">
                     <div class="input-group">
                         <label class="col-md-3 control-label">
-                            <center>
-                                <span class="input-group-addon">
-
-                                </span>
-                            </center>
                         </label>
-                        <input type="submit" id="send_create_mascota" name="send_create_mascota" style="margin-top: 30px" class="btn btn-info btn-block form-control col-md-6" value="Continuar"/>
+                        <input type="button" id="send_update_mascota" name="send_update_mascota" style="margin-top: 80px; margin-left: -20px;" class="btn btn-info btn-block form-control col-md-6" value="Actulizar Mascota"/>
+                        <input type="submit" id="button_submit" name="button_submit" style="margin-top: 80px; margin-left: -20px; display: none" class="btn btn-info btn-block form-control col-md-6" value="Actulizar Mascota"/>
                     </div>
                 </div>
             </div>
     </div>
+    <input type="hidden" id="image1Name" name="image1Name" value="${imagenes[0].nombre}"/>
+    <input type="hidden" id="image2Name" name="image2Name" value="${imagenes[1].nombre}"/>
 </form>
-
-<div id="img_div" style="display: none">
-<form action="${createLink(controller:'imagenes', action:'uploadImg')}" method="POST" enctype="multipart/form-data" id="form_img_upload" name="form_img_upload">
-    <input type="file" name="images1" id="images1" class="fileUpload" enctype="multipart/form-data" />
-    <input type="file" name="images2" id="images2" class="fileUpload" enctype="multipart/form-data" />
-    <div id="target">
-
-    </div>
-    <div class="tab">
-        <div class="mx-auto" style="width: 500px; background-color: #f8f9fa; margin-top: 20px">
-            <legend>
-                <i style="color:black" class="fa fa-paw fa-5x pull-left" aria-hidden="true"></i>
-                <label style="font-size: 20px">Amor de</label>
-                <label style="color: black; font-size: 25px"> Mascotas</label>
-            </legend>
-
-            <center><div id="titleImagen" name="titleImagen" style="display: block"> Ya casi lo tienes, solo faltan las imagenes.</div></center>
-
-            <div class="uploaded_image col s11  m10 l3 "  style="margin-left: 200px" >
-                <div class="form-group" style="height: 150px">
-                    <div class="input-group">
-                        <img  src="/assets/default.png"  alt="add a photo" id="img1" name="img1" class="imageUpload" >
-                    </div>
-                </div>
-            </div>
-            <div class="uploaded_image col s11  m10 l3 "  style="margin-left: 200px" >
-                <div class="form-group" style="height: 150px">
-                    <div class="input-group">
-                        <img  src="/assets/default.png"  alt="add a photo" id="img2" name="img2" class="imageUpload" >
-                    </div>
-                </div>
-            </div>
-
-            <!-- Button input -->
-            <div class="form-group">
-                <div class="input-group">
-                    <label class="col-md-3 control-label">
-                        <center>
-                            <span class="input-group-addon">
-
-                            </span>
-                        </center>
-                    </label>
-                    <input type="hidden" id="mascotaCreateId" name="mascotaCreateId" value=""/>
-                    <input type="submit" id="send_img" name="send_img" style="margin-top: 30px;margin-left: -17px;" class="btn btn-info btn-block form-control col-md-6" value="Omitir por Ahora"/>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-</div>
 %{--<g:each in="${imagenes}" var="imagen">
         <img src="${createLink(controller: 'imagenes', action: 'viewImage', params: ['id': imagen.id])}" width="150px" height="150px"/>
 
 </g:each>--}%
 <script>
     $(document).ready(function() {
+        $("#mascota_name").focus();
+        var URLValidate = "${createLink(controller:'mascota', action:'validarDuplicado')}";
+        $("#send_update_mascota").click(function() {
+            $.ajax({
+                type: "POST",
+                url: URLValidate,
+                data : {
+                    'nombre': $("#mascota_name").val(),
+                    'sexo': $('input[name=mascota_sexo]:checked').val(),
+                    'fecha_nacimiento': $("#mascota_fecha_nacimiento").val(),
+                    'raza': $("#mascota_raza").val(),
+                    'mascotaId': '${mascota.id}'
+                },
+                success: function (resp) {
+                    if(resp == 'valido') {
+                        $("#duplicado").hide();
+                        $( "#button_submit" ).trigger( "click" );
+                    }
+                    if(resp == 'duplicado') {
+                        $("#mascota_name").focus();
+                        $("#duplicado").show();
+                        $("#mascota_name").focus();
+                    }
+                }
+            });
+        });
+
+        preCardInputs();
+        function preCardInputs(){
+            $("#mascota_raza").val("${mascota.raza.id}");
+            var sexo = "${mascota.sexo}";
+            if(sexo == "hembra") {
+                $("#sexo_hembra").prop("checked", true);
+            } else {
+                $("#sexo_macho").prop("checked", true);
+            }
+
+            $("#descripcion").val("${mascota.descripcion}");
+            countChar(document.getElementById("descripcion"));
+        }
+
         $("#img1").click(function() {
             $("input[name='images1']").click();
         });
@@ -344,14 +372,18 @@
                 $("#img1").attr('src', file.target.result);
                 $("#img1").addClass( "ImageOnPreview" );
                 $("#img1").delay(150).show();
-
-                isEmptyFiles();
             }
             if($("#images1").val() != "") {
                 reader.readAsDataURL(image);
             } else {
                 $("#img1").removeClass( "ImageOnPreview" );
+                $("#img1").addClass( "imageUpload" );
                 $("#img1").prop("src", "/assets/default.png");
+            }
+            if(files[0].name == "") {
+                $("#image1Name").val("default")
+            } else {
+                $("#image1Name").val(files[0].name)
             }
         });
 
@@ -365,29 +397,25 @@
                 $("#img2").attr('src', file.target.result);
                 $("#img2").addClass( "ImageOnPreview" );
                 $("#img2").delay(150).show();
-                isEmptyFiles();
             }
 
             if($("#images2").val() != "") {
                 reader.readAsDataURL(image);
             } else {
+                $("#img2").addClass( "imageUpload" );
                 $("#img2").removeClass( "ImageOnPreview" );
                 $("#img2").prop("src", "/assets/default.png");
             }
 
+            if(files[0].name == "") {
+                $("#image2Name").val("default")
+            } else {
+                $("#image2Name").val(files[0].name)
+            }
+
         });
 
-        function isEmptyFiles(){
-            if($("images1").val() == "" && $("images2").val() == "") {
-                $("#send_img").val("Omitir por Ahora");
-            } else {
-                $("#send_img").val("Subir Imagenes");
-            }
-        }
-
-        var mascotaCrearLink = "${createLink(controller:'mascota', action:'crearMascota')}";
-
-        $('#mascota_registration_form').bootstrapValidator({
+        $('#mascota_update_form').bootstrapValidator({
             live: 'disabled',
             excluded: ':disabled',
             feedbackIcons: {
@@ -417,26 +445,6 @@
                         }
                     }
                 }
-            },
-            submitHandler: function(validator, form, submitButton) {
-                $.ajax({
-                    url: mascotaCrearLink,
-                    data: $('#mascota_registration_form').serialize(),
-                    success: function (resp) {
-                        if (resp.success) {
-                            $('#mascotaCreateId').val(resp.mascotaId);
-                            $('#duplicado').hide();
-                            $('#upload_images').show();
-                            $('#mascota_registration_form').hide();
-                            $('#img_div').show();
-                        } else {
-                            document.getElementById("mascota_registration_form").reset();
-                            $("#mascota_raza").val("0").change();
-                            $('#mascota_name').focus();
-                            $('#duplicado').show();
-                        }
-                    }
-                });
             }
         });
 

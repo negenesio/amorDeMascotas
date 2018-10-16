@@ -1,5 +1,7 @@
 package amordemascotas
 
+import com.amordemascotas.Imagenes
+import com.amordemascotas.Mascota
 import com.amordemascotas.Raza
 import com.amordemascotas.Role
 import com.amordemascotas.User
@@ -8,14 +10,19 @@ import com.amordemascotas.UserRole
 class BootStrap {
 
     def springSecurityService
+    def grailsResourceLocator
 
     def init = { servletContext ->
 
         def adminRole = new Role('ROLE_ADMIN').save()
         def userRole = new Role('ROLE_USER').save()
-        def testUser = new User('me', 'password', "nico genesio", "nicolas.genesio@gmail.com", Date.parse("yyyy-MM-dd", "1989-07-15"), 'masculino').save()
-        def adminUser = new User('admin', 'administrator', 'admin administrator', "admin@amordemascotas.com", Date.parse("yyyy-MM-dd", "1970-07-15"), 'masculino').save()
-        UserRole.create testUser, userRole
+        def user1 = new User('user1', 'user1', "user 1", "user.1@gmail.com", Date.parse("yyyy-MM-dd", "1989-07-15"), 'masculino').save()
+        def user2 = new User('user2', 'user2', "user 2", "user.2@gmail.com", Date.parse("yyyy-MM-dd", "1989-07-15"), 'masculino').save()
+        def user3 = new User('user3', 'user3', "user 3", "user.3@gmail.com", Date.parse("yyyy-MM-dd", "1989-07-15"), 'masculino').save()
+        def adminUser = new User('admin', 'admin', 'admin administrator', "admin@amordemascotas.com", Date.parse("yyyy-MM-dd", "1970-07-15"), 'masculino').save()
+        UserRole.create user1, userRole
+        UserRole.create user2, userRole
+        UserRole.create user3, userRole
         UserRole.create adminUser, adminRole
 
         UserRole.withSession {
@@ -99,15 +106,70 @@ class BootStrap {
                      "Terrier tibetano","Tosa","Viejo Pastor Inglés","Viejo Pointer Danés","Vizsla","Volpino Italiano",
                      "Weimaraner","Welsh springer spaniel","Welsh terrier","West highland white terrier","Whippet",
                      "Wirehaired solvakian pointer","Xoloitzcuintle","Yorkshire terrier"]
-        println razas.size();
         razas.each {
             new Raza(descripcion: it).save(failOnError: true)
         }
 
-        assert User.count() == 2
+        Mascota mascota1 = new Mascota(nombre: "kero", fechaNacimiento: Date.parse("YYYY", "2010"), user: user1, sexo: 'macho', raza: Raza.findByDescripcion("Schnauzer miniatura"), descripcion: "Kero es un macho alpha")
+        mascota1.save(failOnError: true)
+        Mascota mascota2 = new Mascota(nombre: "pepa", fechaNacimiento: Date.parse("YYYY", "2011"), user: user1, sexo: 'hembra', raza: Raza.findByDescripcion("Schnauzer miniatura"), descripcion: "Pepa es muy adorable")
+        mascota2.save(failOnError: true)
+
+        Mascota mascota3 = new Mascota(nombre: "Thor", fechaNacimiento: Date.parse("YYYY", "2005"), user: user2, sexo: 'macho', raza: Raza.findByDescripcion("Schnauzer miniatura"), descripcion: "Thor es muy adorable")
+        mascota3.save(failOnError: true)
+        Mascota mascota4 = new Mascota(nombre: "Negrito", fechaNacimiento: Date.parse("YYYY", "2005"), user: user2, sexo: 'macho', raza: Raza.findByDescripcion("Schnauzer miniatura"), descripcion: "Negrito es muy adorable")
+        mascota4.save(failOnError: true)
+        Mascota mascota5 = new Mascota(nombre: "Roco", fechaNacimiento: Date.parse("YYYY", "2002"), user: user2, sexo: 'macho', raza: Raza.findByDescripcion("Schnauzer miniatura"), descripcion: "Roco es muy adorable")
+        mascota5.save(failOnError: true)
+
+        Mascota mascota6 = new Mascota(nombre: "Emma", fechaNacimiento: Date.parse("YYYY", "2005"), user: user2, sexo: 'hembra', raza: Raza.findByDescripcion("Schnauzer miniatura"), descripcion: "Emma es muy adorable")
+        mascota6.save(failOnError: true)
+        Mascota mascota7 = new Mascota(nombre: "Bebe", fechaNacimiento: Date.parse("YYYY", "2005"), user: user2, sexo: 'hembra', raza: Raza.findByDescripcion("Schnauzer miniatura"), descripcion: "Bebe es muy adorable")
+        mascota7.save(failOnError: true)
+        Mascota mascota8 = new Mascota(nombre: "Barbie", fechaNacimiento: Date.parse("YYYY", "2002"), user: user2, sexo: 'hembra', raza: Raza.findByDescripcion("Schnauzer miniatura"), descripcion: "Barbie es muy adorable")
+        mascota8.save(failOnError: true)
+
+        Mascota mascota9 = new Mascota(nombre: "Balbo", fechaNacimiento: Date.parse("YYYY", "2014"), user: user3, sexo: 'macho', raza: Raza.findByDescripcion("Schnauzer miniatura"), descripcion: "balbo es muy adorable")
+        mascota9.save(failOnError: true)
+        Mascota mascota10 = new Mascota(nombre: "Mini", fechaNacimiento: Date.parse("YYYY", "2005"), user: user3, sexo: 'hembra', raza: Raza.findByDescripcion("Schnauzer miniatura"), descripcion: "Mini es muy adorable")
+        mascota10.save(failOnError: true)
+
+        Mascota mascota11 = new Mascota(nombre: "Peque", fechaNacimiento: Date.parse("YYYY", "2005"), user: adminUser, sexo: 'macho', raza: Raza.findByDescripcion("Schnauzer miniatura"), descripcion: "Peque es muy adorable")
+        mascota11.save(failOnError: true)
+        Mascota mascota12 = new Mascota(nombre: "Catia", fechaNacimiento: Date.parse("YYYY", "2014"), user: adminUser, sexo: 'hembra', raza: Raza.findByDescripcion("Schnauzer miniatura"), descripcion: "Catia es muy adorable")
+        mascota12.save(failOnError: true)
+
+        createImage(mascota1);
+        createImage(mascota2);
+        createImage(mascota3);
+        createImage(mascota6);
+        createImage(mascota7);
+        createImage(mascota8);
+        createImage(mascota4);
+        createImage(mascota5);
+        createImage(mascota9);
+        createImage(mascota10);
+        createImage(mascota11)
+        createImage(mascota12)
+
+        assert User.count() == 4
         assert Role.count() == 2
-        assert UserRole.count() == 2
+        assert UserRole.count() == 4
+        assert Mascota.count() == 12
+        assert Imagenes.count() == 24
+        assert Raza.count() == 349
     }
     def destroy = {
+    }
+
+    def createImage(Mascota mascota) {
+        List<Imagenes> imagenesList = [new Imagenes(), new Imagenes()]
+        imagenesList.each {
+            it.type = "image/png"
+            it.nombre = "default"
+            it.imagen = grailsResourceLocator.findResourceForURI('default.png').file.bytes
+            it.mascota = mascota
+            it.save(failOnError: true)
+        }
     }
 }
