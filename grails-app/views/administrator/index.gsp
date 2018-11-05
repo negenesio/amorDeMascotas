@@ -66,6 +66,28 @@
     .confirm{
         color:white;
     }
+
+    .carousel-indicators-numbers li {
+        text-indent: 0;
+        margin: 0 2px;
+        width: 30px;
+        height: 30px;
+        border: none;
+        border-radius: 100%;
+        line-height: 30px;
+        color: #fff;
+        background-color: #999;
+        transition: all 0.25s ease;
+    }
+    .carousel-indicators-numbers li.visited, .carousel-indicators-numbers li:hover, .carousel-indicators-numbers li.active {
+        margin: 0 2px;
+        width: 30px;
+        height: 30px;
+        background-color: black;
+    }
+    .numbers-step {
+        padding-left: 8px;
+    }
     </style>
     <title>Amor de Mascotas</title>
 </head>
@@ -84,6 +106,38 @@
     </div>
 </g:if>
 <g:else>
+%{--test--}%
+    <center>
+        <div id="carouselExampleIndicators"style="background-color: #ebeced;width: 700px;margin-top: 20px;background: url('/assets/banner.jpg');height: 180px">
+            <div>
+                <label style="width: 500px;margin-top: 45px;margin-bottom: 15px;color: white; background: rgba(0, 0, 0, 0.6); font-size: 20px" class="font-weight-bold">
+                    <p>Puedes empezar a buscar encuentros!</p>
+                    <p>Solo debes presionar sobre el <i class="fas fa-heart" style="padding-left: 10px; color: red; cursor: pointer"></i>.</p>
+                </label>
+            </div>
+        </div>
+    </center>
+%{--<center>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="background-color: #ebeced;width: 700px">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="img-carousel test-rotation" style="margin-top: 10px;width: 110px;height: 110px"><img style="width: 110px;height: 110px" src="${resource(dir: 'images', file: 'dog_profile.png')}" alt=""></div>
+            </div>
+            <div class="carousel-item">
+                <div class="img-carousel test-rotation" style="margin-top: 10px;width: 110px;height: 110px"><img style="width: 110px;height: 110px" src="${resource(dir: 'images', file: 'dog_profile.png')}" alt=""></div>
+            </div>
+            <div class="carousel-item">
+                <div class="img-carousel test-rotation" style="margin-top: 10px;width: 110px;height: 110px"><img style="width: 110px;height: 110px" src="${resource(dir: 'images', file: 'dog_profile.png')}" alt=""></div>
+            </div>
+        </div>
+        <ol class="carousel-indicators carousel-indicators-numbers" style="position: unset">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="numbers-step active">1</li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1" class="numbers-step">2</li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2" class="numbers-step">3</li>
+        </ol>
+    </div>
+</center>--}%
+%{--test--}%
     <div id="div_con_mascota" name="div_con_mascota" class="container container-label align-self-start login-form" style="width: 700px;display: block; justify-content: center; align-items: center;height: 415px;">
     <table class="table table-striped">
         <thead>
@@ -105,9 +159,9 @@
                     <td>${mascota.raza.descripcion}</td>
                     <td>${mascota.sexo}</td>
                     <td style="font-size: 20px;width: 150px;">
+                        <i data-toggle="confirmarEncuentro" data-popout="true" data-id="${mascota.id}" class="fas fa-heart" style="padding-left: 10px; color: red; cursor: pointer"></i>
                         <i data-toggle="confirmation-edit" data-popout="true" data-id="${mascota.id}" class="fas fa-edit fa-1x" style="padding-left: 10px; color: black; cursor: pointer" id="editarMascota" name="editarMascota"></i>
                         <i data-toggle="confirmation" data-popout="true" data-id="${mascota.id}" class="fas fa-backspace fa-1x" style="padding-left: 10px; color: #d16a4a; cursor: pointer" id="borrarMascota" name="borrarMascota"></i>
-                        <i class="fas fa-heart" style="padding-left: 10px; color: #5a8044; cursor: pointer"></i>
                     </td>
                 </tr>
         </g:each>
@@ -171,6 +225,29 @@
                 class: 'btn btn-info',
                 iconClass: 'confirm fas fa-check',
                 label: 'Editar',
+            },
+            {
+                class: 'btn btn-secondary',
+                iconClass: 'cancel fas fa-ban',
+                label: 'Cancelar',
+                cancel: true
+            }
+        ]
+    });
+
+    $('[data-toggle=confirmarEncuentro]').confirmation({
+        focusout: false,
+        rootSelector: '[data-toggle=confirmarEncuentro]',
+        title:"¿Realizar Busqueda?",
+        onConfirm: function(value) {
+            var id = $(this).attr('data-id');
+            window.location.href = "/encuentro/busqueda/"+id;
+        },
+        buttons: [
+            {
+                class: 'btn btn-danger',
+                iconClass: 'confirm fas fa-check',
+                label: 'Confirmar',
             },
             {
                 class: 'btn btn-secondary',

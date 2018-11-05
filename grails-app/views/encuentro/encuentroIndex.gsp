@@ -51,7 +51,7 @@
     }
 
     div.hero {
-        background: url('/assets/encuentro01.jpg');
+        background: url('/assets/encuentro001.jpg');
         background-size: cover;
         width: 600px;
         height: 300px;
@@ -77,12 +77,12 @@
         <div class="hero text-block-label" style="margin-top:5px">
             <label style="margin-top: 90px; color: white; background: rgba(0, 0, 0, 0.6); font-size: 20px" class="font-weight-bold">
             <g:if test="${encuentros.isEmpty()}">
-                <p>¡Todavia no realizaste ninguna busqueda de encuentro!</p>
-                <p>¡Puedes empezar ahora mismo!.</p>
+                <p>¡Todavia no Tienes un ENCUENTRO acertado!</p>
+                <p>¡Sigue realizando busquedas, quizas hoy tengas suerte!.</p>
             </g:if>
             <g:else>
-                <p>¡Te notifcaremos cuando tengas un encuentro concretado!</p>
-                <p>¡Nunca dejes de buscar encuentros!.</p>
+                <p>¡Ya tinenes encuentros concretados, Felicitaciones!</p>
+                <p>¡Sigue probando suerte, nunca dejes de buscar!.</p>
             </g:else>
             </label>
         </div>
@@ -93,37 +93,52 @@
 
         </div>
     </center>
-    <div id="div_con_mascota" name="div_con_mascota" class="container container-label align-self-start login-form" style="width: 700px;display: block; justify-content: center; align-items: center;height: 415px;">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th><i class="fa fa-paw fa-2x"></i></th>
-                <th>Nombre</th>
-                <th>Edad</th>
-                <th>Raza</th>
-                <th>Sexo</th>
-                <th>Acciones</th>
-            </tr>
-            </thead>
-            <tbody>
-            <g:each in="${mascotas}" var="mascota" status="counter">
+        <div id="div_con_mascota" name="div_con_mascota" class="container container-label align-self-start login-form" style="width: 700px;display: block; justify-content: center; align-items: center;height: 415px;">
+            <table class="table table-striped">
+                <thead>
                 <tr>
-                    <td scope="row"></td>
-                    <td>${mascota.nombre}</td>
-                    <td>${new Date().format('YYYY').toLong() - mascota.fechaNacimiento.format('YYYY').toLong()}</td>
-                    <td>${mascota.raza.descripcion}</td>
-                    <td>${mascota.sexo}</td>
-                    <td style="font-size: 20px;width: 150px;">
-                        <span data-toggle="confirmation" data-popout="true" data-id="${mascota.id}" style="font-size: 15px; color: indianred; cursor: pointer"><i class="fas fa-heart" style="color: indianred"></i>Encuentro<i class="fas fa-paw" style="color: indianred"></i></span>
-                    </td>
+                    <th><i class="fa fa-paw fa-2x"></i></th>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Raza</th>
+                    <th>Sexo</th>
+                    <th>Acciones</th>
                 </tr>
-            </g:each>
-            </tbody>
-        </table>
-        <center><div class="paginateButtons" style="margin-top: 30px;">
-            <g:paginate total="${mascotasCount}" max="5"/>
+                </thead>
+                <tbody>
+                <g:each in="${mascotas}" var="mascota" status="counter">
+                    <g:if test="${encuentros.findAll {it.mascotaOwner.id == mascota.id}}">
+                        <tr>
+                            <td scope="row"></td>
+                            <td>${mascota.nombre}</td>
+                            <td>${new Date().format('YYYY').toLong() - mascota.fechaNacimiento.format('YYYY').toLong()}</td>
+                            <td>${mascota.raza.descripcion}</td>
+                            <td>${mascota.sexo}</td>
+                            <td style="font-size: 20px;width: 150px;">
+                                <span data-toggle="confirmation" data-popout="true" data-id="${mascota.id}" style="font-size: 18px; color: indianred; cursor: pointer"><i class="fas fa-heart" style="color: indianred"></i>Buscar <i class="fas fa-paw" style="color: indianred"></i></span>
+                            </td>
+                        </tr>
+                    </g:if>
+                    <g:else>
+                        <tr>
+                            <td scope="row"></td>
+                            <td>${mascota.nombre}</td>
+                            <td>${new Date().format('YYYY').toLong() - mascota.fechaNacimiento.format('YYYY').toLong()}</td>
+                            <td>${mascota.raza.descripcion}</td>
+                            <td>${mascota.sexo}</td>
+                            <td style="font-size: 20px;width: 150px;">
+                                <span data-toggle="confirmation" data-popout="true" data-id="${mascota.id}" style="font-size: 18px; color: indianred; cursor: pointer"><i class="fas fa-heart" style="color: indianred"></i>Buscar <i class="fas fa-paw" style="color: indianred"></i></span>
+                            </td>
+                        </tr>
+                    </g:else>
 
-        </div></center>
+                </g:each>
+                </tbody>
+            </table>
+            <center><div class="paginateButtons" style="margin-top: 30px;">
+                <g:paginate total="${mascotasCount}" max="5"/>
+
+            </div></center>
     </div>
 
 </div>

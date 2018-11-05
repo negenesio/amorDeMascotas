@@ -13,7 +13,6 @@ buildscript {
         classpath "gradle.plugin.com.github.gmazzo:plugin:0.4"
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
-
     }
 }
 
@@ -68,6 +67,7 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
     compile "org.grails.plugins:mail:2.0.0.RC6"
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
 }
 
 bootRun {

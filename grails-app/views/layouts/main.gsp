@@ -1,4 +1,6 @@
 <!doctype html>
+<%@ page import="com.amordemascotas.HistoricosEncuentros; com.amordemascotas.NotificacionesChats; com.amordemascotas.Notificaciones; com.amordemascotas.Encuentros; com.amordemascotas.User" contentType="text/html;charset=UTF-8" %>
+
 <html lang="en" class="no-js">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -14,6 +16,7 @@
     <asset:stylesheet src="fontawesome-free-5.2.0-web/css/all.min.css"/>
     <asset:stylesheet src="bootstrap-selectpicker.css"/>
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
+    <asset:stylesheet src="notificationcircle.css"/>
 
     <asset:javascript src="jquery.js"/>
     <asset:javascript src="popper.min.js"/>
@@ -22,13 +25,15 @@
     <asset:javascript src="bootstrapvalidator.min.js"/>
     <asset:javascript src="bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js"/>
     <asset:javascript src="bootstrap-selectpicker.js"/>
+
     <g:layoutHead/>
+
 
 </head>
 <body>
 
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<g:set var="userCurrent" value="${User.findByUsername(sec.username())}"/>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 80px; align-items: baseline;font-size: 18px;">
        <a href="/conocer-plus" style="color: gray"><div>
             <i style="color:black" class="fa fa-paw fa-2x pull-left" aria-hidden="true"></i>
             <label style="font-size: 20px">Amor de</label>
@@ -38,38 +43,88 @@
     </button>
 
         <sec:ifLoggedIn>
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto dots">
              <li class="nav-item ${request.getRequestURL().toString().contains('/home') ? 'active' : ''}">
-                <a style="padding-left: 15px" class="nav-link" href="/home"><b>Principal</b><span class="sr-only">(current)</span></a>
+                <a style="padding-left: 10px" class="nav-link" href="/home"><b>Principal</b></a>
             </li>
             <li class="nav-item ${request.getRequestURL().toString().contains('/mascota/registrar') ? 'active' : ''}">
-                <a style="padding-left: 15px" class="nav-link" href="/mascota/registrar"><b>Crear Mascota</b><span class="sr-only">(current)</span></a>
+                <a style="padding-left: 10px" class="nav-link" href="/mascota/registrar"><b>Crear Mascota</b></a>
             </li>
             <g:if test="${request.getRequestURL().toString().contains('/mascota/editarMascota')}">
                 <li class="nav-item ${request.getRequestURL().toString().contains('/mascota/editarMascota') ? 'active' : ''}">
-                    <a style="padding-left: 15px" class="nav-link" href="#"><b>Editar Mascota</b><span class="sr-only">(current)</span></a>
+                    <a style="padding-left: 10px" class="nav-link" href="#"><b>Editar Mascota</b></a>
                 </li>
             </g:if>
+
             <li class="nav-item ${request.getRequestURL().toString().contains('/encuentro/index') ? 'active' : ''}">
-                <a style="padding-left: 15px" class="nav-link" href="/encuentro/index"><b>Encuentros</b><span class="sr-only">(current)</span></a>
+                <a style="padding-left: 10px" class="nav-link" href="/encuentro/index">
+                    <b>Buscar Encuentros</b>
+                </a>
             </li>
+                <g:set var="contador" value="${Notificaciones.findByUser(userCurrent)?.contador}"/>
+                <g:set var="listMatched" value="${Encuentros.findAllByUserOwnerAndStatus(userCurrent,'matched')}"/>
+                <g:if test="${listMatched.size() != 0}">
+                    <g:set var="contadorAux" value="${NotificacionesChats.findAllByEncuentroInList(listMatched).contador.sum()}"/>
+                    <g:if test="${Encuentros.findAllByUserOwnerAndStatus(userCurrent,'matched')}">
+                        <li class="nav-item ${request.getRequestURL().toString().contains('/encuentro/concretados') ? 'active' : ''}">
+                            <a style="padding-left: 10px" class="nav-link" href="/encuentro/concretados">
+                                <b>Encuentros</b>
+                                <g:if test="${contador && contador != 0 && contadorAux && contadorAux != 0}">
+                                    <span class="glyphicon glyphicon-envelope">
+                                        <mark class="big swing">${contador}</mark>
+                                    </span>
+                                    <span class="glyphicon glyphicon-envelope">
+                                        <mark class="big swing green">${contadorAux}</mark>
+                                    </span>
+                                </g:if>
+                                <g:else>
+                                    <g:if test="${contador && contador != 0}">
+                                        <span class="glyphicon glyphicon-envelope">
+                                            <mark class="big swing">${contador}</mark>
+                                        </span>
+                                    </g:if>
+                                    <g:else>
+                                        <g:if test="${contadorAux && contadorAux != 0}">
+                                            <span class="glyphicon glyphicon-envelope">
+                                                <mark class="big swing green">${contadorAux}</mark>
+                                            </span>
+                                        </g:if>
+                                    </g:else>
+                                </g:else>
+                            </a>
+                        </li>
+                    </g:if>
+                </g:if>
+                <g:if test="${HistoricosEncuentros.findByUserOwnerOrUserFind(userCurrent, userCurrent)}">
+                    <li class="nav-item ${request.getRequestURL().toString().contains('/encuentro/historicos') ? 'active' : ''}">
+                        <a style="padding-left: 10px" class="nav-link" href="/encuentro/historicos">
+                            <b>Historicos</b>
+                        </a>
+                    </li>
+                </g:if>
+                <li class="nav-item ${request.getRequestURL().toString().contains('/estadisticas/mascotas') ? 'active' : ''}">
+                    <a style="padding-left: 10px" class="nav-link" href="/estadisticas/mascotas">
+                        <b>Estadisticas</b>
+                    </a>
+                </li>
             </ul>
         </sec:ifLoggedIn>
         <sec:ifNotLoggedIn>
             <div style="padding-right: 50px" class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                         <li class="nav-item ${request.getRequestURL().toString().contains('/registration') ? 'active' : ''}">
-                            <a style="padding-left: 15px" class="nav-link " href="/registration"><b>Registrarse</b><span class="sr-only">(current)</span></a>
+                            <a style="padding-left: 10px" class="nav-link " href="/registration"><b>Registrarse</b></a>
                         </li>
                         <li class="nav-item ${request.getRequestURL().toString().contains('/login') ? 'active' : ''}">
-                            <a style="padding-left: 15px" class="nav-link" href="/login"><b>Iniciar Sesion</b></a>
+                            <a style="padding-left: 10px" class="nav-link" href="/login"><b>Iniciar Sesion</b></a>
                         </li>
                         <li class="nav-item ${request.getRequestURL().toString().contains('/recovery-password') ? 'active' : ''}">
-                            <a style="padding-left: 15px" class="nav-link" href="/recovery-password"><b>Recuperar Contraseña</b></a>
+                            <a style="padding-left: 10px" class="nav-link" href="/recovery-password"><b>Recuperar Contraseña</b></a>
                         </li>
 
                     <li class="nav-item ${request.getRequestURL().toString().contains('/conocer-plus') ? 'active' : ''} ${request.getRequestURL().toString().contains('/index') ? 'active' : ''} ">
-                        <a style="padding-left: 15px" class="nav-link" href="/conocer-plus"><b>Conocer +</b><span class="sr-only">(current)</span></a>
+                        <a style="padding-left: 10px" class="nav-link" href="/conocer-plus"><b>Conocer +</b>
+                        </a>
                         </li>
                 </ul>
             </div>
@@ -101,6 +156,5 @@
 <div id="spinner" class="spinner" style="display:none;">
     <g:message  default="Loading&hellip;"/>
 </div>
-
 </body>
 </html>

@@ -8,7 +8,6 @@
 
     <style>
     .carousel {
-        margin: 50px auto;
         padding: 0 70px;
     }
     .carousel .item {
@@ -16,7 +15,6 @@
         font-size: 14px;
         text-align: center;
         overflow: hidden;
-        min-height: 290px;
     }
     .carousel .item .img-box {
         width: 135px;
@@ -32,15 +30,18 @@
         display: block;
         border-radius: 50%;
     }
-    .carousel .testimonial {
-        padding: 30px 0 10px;
+
+    .carousel .img-carousel img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        border-radius: 50%;
     }
-    .carousel .overview {
-        font-style: italic;
-    }
-    .carousel .overview b {
-        text-transform: uppercase;
-        color: #7AA641;
+    .img-carousel img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        border-radius: 50%;
     }
     .carousel .carousel-control {
         width: 40px;
@@ -57,9 +58,6 @@
         color: rgba(0, 0, 0, 0.8);
         text-shadow: 0 3px 3px #e6e6e6, 0 0 0 #000;
     }
-    .carousel .carousel-indicators {
-        bottom: -40px;
-    }
     .carousel-indicators li, .carousel-indicators li.active {
         width: 10px;
         height: 10px;
@@ -67,214 +65,30 @@
         border-radius: 50%;
     }
     .carousel-indicators li {
-        background: #999;
+        background: #45396c;
         border-color: transparent;
         box-shadow: inset 0 2px 1px rgba(0,0,0,0.2);
     }
     .carousel-indicators li.active {
-        background: #555;
+        background: #999;
         box-shadow: inset 0 2px 1px rgba(0,0,0,0.2);
     }
 
-    .tinder-header {
-        display: block;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        align-self: center;
-        height: 18vh;
-        padding-bottom: 10px;
-        z-index: 5;
-    }
-
-    .tinder {
-        width: 100vw;
-        height: 100vh;
-        max-height: 680px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
+    .carousel-indicators{
         position: relative;
-        opacity: 0;
-        transition: opacity 0.1s ease-in-out;
-    }
-
-    .loaded.tinder {
-        opacity: 1;
-    }
-
-    .tinder--status {
-        position: absolute;
-        top: 50%;
-        margin-top: -30px;
-        z-index: 3;
-        width: 100%;
-        text-align: center;
-        pointer-events: none;
-    }
-
-    .tinder--status i {
-        font-size: 100px;
-        opacity: 0;
-        transform: scale(0.3);
-        transition: all 0.2s ease-in-out;
-        position: absolute;
-        width: 100px;
-        margin-left: -50px;
-    }
-
-    .tinder_love .fa-heart {
-        opacity: 0.7;
-        transform: scale(1);
-    }
-
-    .tinder_nope .fa-remove {
-        opacity: 0.7;
-        transform: scale(1);
-    }
-
-    .tinder--cards {
-        flex-grow: 16;
-        padding-top: 15vh;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        z-index: 1;
-        pointer-events: auto;
-    }
-
-    .tinder--card {
-        display: inline-block;
-        width: 90vw;
-        max-width: 400px;
-        background: #0285CD;
-        color: #FFFFFF;
-        padding-bottom: 16px;
-        border-radius: 8px;
-        overflow: hidden;
-        position: absolute;
-        will-change: transform;
-        transition: all 0.3s ease-in-out;
-        cursor: -webkit-grab;
-        cursor: -moz-grab;
-        cursor: grab;
-    }
-
-    .moving.tinder--card {
-        transition: none;
-        cursor: -webkit-grabbing;
-        cursor: -moz-grabbing;
-        cursor: grabbing;
-    }
-
-    .tinder--card img {
-        max-width: 100%;
-        pointer-events: none;
-    }
-
-    .tinder--card h3 {
-        margin-top: 12px;
-        font-size: 32px;
-        padding: 0 16px;
-        pointer-events: none;
-    }
-
-    .tinder--card p {
-        margin-top: 24px;
-        font-size: 20px;
-        padding: 0 16px;
-        pointer-events: none;
-    }
-
-    .tinder--buttons {
-        flex: 0 0 100px;
-        text-align: center;
-        padding-top: 20px;
-        z-index: 2;
-    }
-
-    .tinder--buttons button {
-        border-radius: 50%;
-        line-height: 60px;
-        width: 60px;
-        border: 0;
-        background: #FFFFFF;
-        display: inline-block;
-        margin: 0 8px;
-    }
-
-    .tinder--buttons button:focus {
-        outline: 0;
-    }
-
-    .tinder--buttons i {
-        font-size: 32px;
-        vertical-align: middle;
+        margin-top: 30px;
     }
 
     .fa-heart {
-        color: #FFACE4;
+        color: #ef775f;
     }
 
-    .fa-remove {
-        color: #CDD6DD;
+    .fa-times {
+        color: #878c91;
     }
 
     .fa-refresh {
         color: #ACF9D4;
-    }
-
-    .tinder-result-button {
-        display: block;
-        position: absolute;
-        text-align: center;
-        align-self: center;
-        justify-content: center;
-        align-items: flex-start;
-        z-index: 0;
-    }
-
-    .tinder-result-button h3 {
-        font-size: 32px;
-        padding: 32px 16px;
-        color: #0285CD;
-        max-width: 380px;
-    }
-
-    .tinderresult {
-        padding-top: 10vh;
-        text-align: center;
-        align-self: center;
-        justify-content: center;
-        align-items: flex-start;
-        width: 90vw;
-        max-width: 400px;
-        background: #FFFFFF;
-        color: #0285CD;
-        padding-bottom: 40px;
-        z-index: 1;
-        position: absolute;
-        transition: all 1.3s ease-in-out;
-        display: none;
-    }
-
-    .tinder-result img {
-        max-width: 100%;
-        max-height: 50vh;
-        padding: 10%;
-        pointer-events: none;
-    }
-
-    .tinder-result h3 {
-        margin-top: 32px;
-        font-size: 32px;
-        padding: 0 16px;
-        pointer-events: none;
-    }
-
-    .tinder-result p {
-        font-size: 20px;
-        padding: 0 16px;
-        pointer-events: none;
     }
 
     .button {
@@ -308,74 +122,194 @@
     .button-approved:hover {
         background-color: #dee2e6;
     }
+    .carousel.slide {
+        width: 350px;
+        margin-top: 20px;
+    }
 
+    .color-hembra {
+        background-color: #f5c6cb;
+    }
+
+    .color-macho {
+        background-color: #9dc1d3;
+    }
+
+    #div_test {
+        transition: transform 1s linear;
+        transform-origin: top left;
+        transform-style: preserve-3D;
+    }
+
+    #like:hover {
+        color: red;
+    }
+
+    #notLike:hover {
+        color: black;
+    }
+
+    .box-rotate-derecha {
+        transform: rotate(-180deg);
+    }
+    .box-rotate-izquierda {
+        transform: rotate(180deg);
+    }
+
+    .like {
+        border-radius: 5px;
+        padding: 5px 10px;
+        border: 2px solid green;
+        color: green;
+        text-transform: uppercase;
+        font-size: 15px;
+        position: absolute;
+        top: 10px;
+        right: 69%;
+        text-shadow: none;
+    }
+    .dislike {
+        border-radius: 5px;
+        padding: 5px 10px;
+        border: 2px solid red;
+        color: red;
+        text-transform: uppercase;
+        font-size: 15px;
+        position: absolute;
+        top: 10px;
+        left: 66%;
+        text-shadow: none;
+    }
+
+        /*TEST*/
+    #container {
+        width: 500px;
+        margin: auto !important;
+        display: block;
+        height: 500px;
+        position: relative;
+        list-style-type: none;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .rotate-left {
+        transform: rotate(30deg) scale(0.8);
+        transition: 1s;
+        margin-left: 400px;
+        cursor: e-resize;
+        opacity: 0;
+        z-index: 10;
+    }
+    .rotate-right {
+        transform: rotate(-30deg) scale(0.8);
+        transition: 1s;
+        opacity: 0;
+        margin-left: -400px;
+        cursor: w-resize;
+        z-index: 10;
+    }
+    .avatar {
+        background: #222;
+        width: 340px;
+        height: 340px;
+        display: block;
+        margin-top: 10px;
+        margin-left: 10px;
+        background-size: auto 160% !important;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+        .conteiner-test{
+            width: 50%;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+    li {
+        list-style-type: none;
+    }
     </style>
 </head>
 <body>
-<div class="tab">
-    <div class="mx-auto" style="width: 500px; background-color: #f8f9fa; margin-top: 20px">
-        <!-- Form Name -->
-        <legend style="    margin-left: 20px;">
-            <center><img style="height: 70px;width: 70px" src="${resource(dir: 'images', file: 'dog-heart.png')}" alt="">
-            <label style="font-size: 20px">Encuentra la mejor Opcion para:</label>
-            <label style="color: black; font-size: 25px"> ${mascotaOwner.nombre}</label></center>
-        </legend>
-        <legend>
-            <center>
-                <g:if test="${imagenesOwner[0].nombre != 'default'}">
-                    <img  src="${createLink(controller: 'imagenes', action: 'viewImage', params: ['id': imagenesOwner[0].id])}"  alt="add a photo" id="img1" name="img1" class="ImageOnPreview">
-                </g:if>
-                <g:if test="${imagenesOwner[1].nombre != 'default'}">
-                    <img  src="${createLink(controller: 'imagenes', action: 'viewImage', params: ['id': imagenesOwner[1].id])}"  alt="add a photo" id="img2" name="img2" class="ImageOnPreview">
-                </g:if>
-            </center>
-        </legend>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-center m-auto">
-                    <div id="sinMyCarousel" class="carousel slide" style="margin: 0;" data-ride="carousel">
-                        <!-- Wrapper for carousel items -->
-                        <div class="carousel-inner" style="height: 300px">
-                            <div class="item carousel-item active">
-                                <g:if test="${imagenesFind[0].nombre != 'default'}">
-                                    <div class="img-box" style="margin-top: 80px;"><img src="${createLink(controller: 'imagenes', action: 'viewImage', params: ['id': imagenesFind[0].id])}" alt=""></div>
-                                </g:if>
-                                <g:else>
-                                    <div class="img-box" style="margin-top: 80px;"><img src="${resource(dir: 'images', file: 'dog_profile.png')}" alt=""></div>
-                                </g:else>
-                            </div>
-                            <div class="item carousel-item">
-                                <g:if test="${imagenesFind[1].nombre != 'default'}">
-                                    <div class="img-box" style="margin-top: 80px;"><img src="${createLink(controller: 'imagenes', action: 'viewImage', params: ['id': imagenesOwner[1].id])}" alt=""></div>
-                                </g:if>
-                                <g:else>
-                                    <div class="img-box" style="margin-top: 80px;"><img src="${resource(dir: 'images', file: 'dog_profile.png')}" alt=""></div>
-                                </g:else>
-                            </div>
-                        </div>
-                        <!-- Carousel controls -->
-                        <a class="carousel-control left carousel-control-prev" href="#sinMyCarousel" data-slide="prev" style="margin-top: -20%;">
-                            <i style="color:black" class="fa fa-angle-left fa-2x"></i>
-                        </a>
-                        <a class="carousel-control right carousel-control-next" href="#sinMyCarousel" data-slide="next" style="margin-top: -20%;">
-                            <i style="color:black" class="fa fa-angle-right fa-2x"></i>
-                        </a>
-                        <label style="color: black; font-size: 25px"> ${mascotaFind.nombre}</label></center>
-                        <center><div style="padding-bottom: 15px;padding-bottom: 20px;margin-bottom: 40px;" class="tinder--buttons">
-                            <button id="nope" class="button-approved"><i class="fa fa-times"></i></button>
-                            <button id="love" class="button-approved"><i class="fa fa-heart"></i></button>
-                        </div></center>
-                    </div>
-                </div>
 
+<center><div class="conteiner-test">
+    <div style="padding-top: 10px;margin-top: 20px;">
+        <div id="img_div" style="display: block; padding-bottom: 30px;">
+            <div class="tab">
+                <div class="mx-auto" style="width: 500px;margin-top: 20px;margin-left: -160px;height: 110px;">
+                    <legend style="margin-left: 0px;">
+                        <ul class="list-inline color-${mascotaOwner.sexo}">
+                            <li class="list-inline-item">
+                                <div id="carouselExampleFadeOwner" class="carousel slide carousel-fade" data-ride="carousel" style="margin-left: -250px">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <g:if test="${imagenesOwner[0].nombre != 'default'}">
+                                                <div class="img-carousel" style="margin-top: 10px;width: 110px;height: 110px"><img style="width: 110px;height: 110px" src="${createLink(controller: 'imagenes', action: 'viewImage', params: ['id': imagenesOwner[0].id])}" alt=""></div>
+                                            </g:if>
+                                            <g:else>
+                                                <div class="img-carousel" style="margin-top: 10px;width: 110px;height: 110px"><img style="width: 110px;height: 110px" src="${resource(dir: 'images', file: 'dog_profile.png')}" alt=""></div>
+                                            </g:else>
+                                        </div>
+                                        <div class="carousel-item ">
+                                            <g:if test="${imagenesOwner[1].nombre != 'default'}">
+                                                <div class="img-carousel" style="margin-top: 10px;width: 110px;height: 110px"><img style="width: 110px;height: 110px" src="${createLink(controller: 'imagenes', action: 'viewImage', params: ['id': imagenesOwner[1].id])}" alt=""></div>
+                                            </g:if>
+                                            <g:else>
+                                                <div class="img-carousel" style="margin-top: 10px;width: 110px;height: 110px"><img style="width: 110px;height: 110px" src="${resource(dir: 'images', file: 'dog_profile.png')}" alt=""></div>
+                                            </g:else>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-inline-item" style="margin-left: -110px;position: absolute;margin-top: 15px;">
+                                <h3>La mejor opcion para:</h3><h2>${mascotaOwner.nombre}</h2>
+                            </li>
+                        </ul>
+                    </legend>
+                </div>
             </div>
         </div>
+
+        <div id="div_test" class="buddy" style="cursor: crosshair;">
+
+        </div>
     </div>
-</div>
+</div></center>
 <script>
-    $('.carousel').carousel({
-        interval: 8000
+    function buscarAjax() {
+        jQuery.ajax({
+            type:'GET',
+            data:'mascotaId=' + ${mascotaOwner.id},
+            url:'/encuentro/encuentroBusquedaAjax',
+            success:function(data,textStatus)
+            {
+                $("#div_test").html(data);
+            },
+            error:
+                function(XMLHttpRequest,textStatus,errorThrown){
+                    window.location.href = "/home";
+                }
+        });
+    };
+
+    $("#carouselExampleFadeOwner").carousel({
+        pause: true, // don't forget the colon here, it's an object
+        interval: true,
+        wrap: true,
+        ride: true,
+        interval: 1000 * 2
     })
+
+    buscarAjax();
+
+
+    /*END*/
 </script>
+
 </body>
 </html>

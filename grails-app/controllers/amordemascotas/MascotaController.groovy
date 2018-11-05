@@ -14,6 +14,8 @@ class MascotaController {
     def springSecurityService;
     def imagenesService;
     def grailsResourceLocator;
+    EstadisticasMascotaController estadisticasController
+
 
     @Secured('isAuthenticated()')
     def registrarMascota() {
@@ -32,7 +34,7 @@ class MascotaController {
 
         Mascota mascota = mascotaService.crearMascota(name, fechaNacimiento, sexo, raza, descripcion)
         if(mascota) {
-
+            estadisticasController.createEstadisticas(mascota, mascota.user)
             return render(status:201, text:([success:true, mascotaId:mascota.id] as JSON).toString(),contentType: 'application/json')
         } else {
             result.success = false

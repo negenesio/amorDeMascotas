@@ -1,0 +1,95 @@
+tr.dots * {
+    /* disable border-box from bootstrap */
+    list-style-type: none;
+}
+tr.dots a {
+    text-decoration: none;
+    font-size: 20px;
+    color: #34495e;
+}
+tr.dots a:hover {
+    text-decoration: none;
+    font-size: 20px;
+    color: #bdc3c7;
+}
+tr.dots td {
+    display: box;
+    position: relative;
+    padding: 10px 0 ;
+}
+
+tr.dots td span {
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    padding: 10px;
+    margin: 0 auto;
+    line-height: 30px;
+    text-align: center;
+}
+tr.dots td mark {
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    border: 2px solid #FFF;
+    width: 20px;
+    height: 20px;
+    background-color: #00b900;
+    position: absolute;
+    top: -5px;
+    left: -10px;
+    font-size: 10px;
+    line-height: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: #FFF;
+    font-weight: 700;
+}
+tr.dots td mark.big {
+    width: 30px;
+    height: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    font-size: 15px;
+    top: 8px;
+    left: 55px;
+}
+tr.dots td mark.green {
+    background-color: #27ae60;
+}
+tr.dots td mark.blue {
+    background-color: #3498db;
+}
+tr.dots > td > a > span > mark {
+    -webkit-animation-name: bounceIn;
+    animation-name: bounceIn;
+    -webkit-transform-origin: center bottom;
+    -ms-transform-origin: center bottom;
+    transform-origin: center bottom;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+}
+mark:hover > mark {
+    -webkit-animation-name: bounce;
+    animation-name: bounce;
+}
+mark:hover > mark.rubberBand {
+    -webkit-animation-name: rubberBand;
+    animation-name: rubberBand;
+}
+
+tr.dots > td:hover > a > span > mark.swing {
+    -webkit-transform-origin: top center;
+    -ms-transform-origin: top center;
+    transform-origin: top center;
+    -webkit-animation-name: swing;
+    animation-name: swing;
+}
+
+code {
+    background: #ecf0f1;
+}

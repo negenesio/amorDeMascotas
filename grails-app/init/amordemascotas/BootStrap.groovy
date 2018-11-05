@@ -1,5 +1,6 @@
 package amordemascotas
 
+import com.amordemascotas.EstadisticasMascota
 import com.amordemascotas.Imagenes
 import com.amordemascotas.Mascota
 import com.amordemascotas.Raza
@@ -139,18 +140,31 @@ class BootStrap {
         Mascota mascota12 = new Mascota(nombre: "Catia", fechaNacimiento: Date.parse("YYYY", "2014"), user: adminUser, sexo: 'hembra', raza: Raza.findByDescripcion("Schnauzer miniatura"), descripcion: "Catia es muy adorable")
         mascota12.save(failOnError: true)
 
-        createImage(mascota1);
-        createImage(mascota2);
-        createImage(mascota3);
-        createImage(mascota6);
-        createImage(mascota7);
-        createImage(mascota8);
-        createImage(mascota4);
-        createImage(mascota5);
-        createImage(mascota9);
-        createImage(mascota10);
-        createImage(mascota11)
-        createImage(mascota12)
+        createImageValidParams(mascota1, grailsResourceLocator.findResourceForURI('schnauzermini01.jpg').file.bytes, grailsResourceLocator.findResourceForURI('schnauzermini02.jpg').file.bytes);
+        createImageValidParams(mascota2, grailsResourceLocator.findResourceForURI('schnauzermini03.jpg').file.bytes, grailsResourceLocator.findResourceForURI('schnauzermini04.jpg').file.bytes);
+        createImageValidParams(mascota3, grailsResourceLocator.findResourceForURI('schnauzermini05.jpg').file.bytes, grailsResourceLocator.findResourceForURI('schnauzermini06.jpg').file.bytes);
+        createImageValidParams(mascota6, grailsResourceLocator.findResourceForURI('schnauzermini07.jpg').file.bytes, grailsResourceLocator.findResourceForURI('schnauzermini08.jpg').file.bytes);
+        createImageValidParams(mascota7, grailsResourceLocator.findResourceForURI('schnauzermini09.jpg').file.bytes,grailsResourceLocator.findResourceForURI('schnauzermini10.jpg').file.bytes);
+        createImageValidParams(mascota8, grailsResourceLocator.findResourceForURI('schnauzermini11.jpg').file.bytes, grailsResourceLocator.findResourceForURI('schnauzermini12.jpg').file.bytes);
+        createImageValidParams(mascota4, grailsResourceLocator.findResourceForURI('schnauzermini13.jpg').file.bytes, grailsResourceLocator.findResourceForURI('schnauzermini14.jpg').file.bytes);
+        createImageValidParams(mascota5, grailsResourceLocator.findResourceForURI('schnauzermini15.jpg').file.bytes, grailsResourceLocator.findResourceForURI('schnauzermini16.jpg').file.bytes);
+        createImageValidParams(mascota9, grailsResourceLocator.findResourceForURI('schnauzermini17.jpg').file.bytes, grailsResourceLocator.findResourceForURI('schnauzermini18.jpg').file.bytes);
+        createImageValidParams(mascota10, grailsResourceLocator.findResourceForURI('schnauzermini19.jpg').file.bytes, grailsResourceLocator.findResourceForURI('schnauzermini20.jpg').file.bytes);
+        createImageValidParams(mascota11, grailsResourceLocator.findResourceForURI('schnauzermini21.jpg').file.bytes, grailsResourceLocator.findResourceForURI('schnauzermini03.jpg').file.bytes);
+        createImageValidParams(mascota12, grailsResourceLocator.findResourceForURI('schnauzermini01.jpg').file.bytes, grailsResourceLocator.findResourceForURI('schnauzermini02.jpg').file.bytes);
+
+        new EstadisticasMascota(mascota: mascota1, user: user1).save()
+        new EstadisticasMascota(mascota: mascota2, user: user1).save()
+        new EstadisticasMascota(mascota: mascota3, user: user2).save()
+        new EstadisticasMascota(mascota: mascota4, user: user2).save()
+        new EstadisticasMascota(mascota: mascota5, user: user2).save()
+        new EstadisticasMascota(mascota: mascota6, user: user2).save()
+        new EstadisticasMascota(mascota: mascota7, user: user2).save()
+        new EstadisticasMascota(mascota: mascota8, user: user2).save()
+        new EstadisticasMascota(mascota: mascota9, user: user3).save()
+        new EstadisticasMascota(mascota: mascota10, user: user3).save()
+        new EstadisticasMascota(mascota: mascota11, user: adminUser).save()
+        new EstadisticasMascota(mascota: mascota12, user: adminUser).save()
 
         assert User.count() == 4
         assert Role.count() == 2
@@ -162,12 +176,28 @@ class BootStrap {
     def destroy = {
     }
 
-    def createImage(Mascota mascota) {
-        List<Imagenes> imagenesList = [new Imagenes(), new Imagenes()]
+    def createImageValid(Mascota mascota) {
+        List<Imagenes> imagenesList = [new Imagenes(nombre: "images1", imagen: grailsResourceLocator.findResourceForURI('imagen1.png').file.bytes), new Imagenes(nombre: "images2", imagen: grailsResourceLocator.findResourceForURI('imagen2.png').file.bytes)]
         imagenesList.each {
             it.type = "image/png"
-            it.nombre = "default"
-            it.imagen = grailsResourceLocator.findResourceForURI('default.png').file.bytes
+            it.mascota = mascota
+            it.save(failOnError: true)
+        }
+    }
+
+    def createImageValidParams(Mascota mascota, byte[] imagen1,  byte[] imagen2) {
+        List<Imagenes> imagenesList = [new Imagenes(nombre: "images1", imagen: imagen1), new Imagenes(nombre: "images2", imagen: imagen2)]
+        imagenesList.each {
+            it.type = "image/jpg"
+            it.mascota = mascota
+            it.save(failOnError: true)
+        }
+    }
+
+    def createImageValidAndDefault(Mascota mascota) {
+        List<Imagenes> imagenesList = [new Imagenes(nombre: "images1", imagen: grailsResourceLocator.findResourceForURI('imagen1.png').file.bytes), new Imagenes(nombre: "default", imagen: grailsResourceLocator.findResourceForURI('default.png').file.bytes)]
+        imagenesList.each {
+            it.type = "image/png"
             it.mascota = mascota
             it.save(failOnError: true)
         }
