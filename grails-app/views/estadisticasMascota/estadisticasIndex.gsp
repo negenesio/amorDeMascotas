@@ -5,6 +5,7 @@
     <asset:stylesheet src="login.css"/>
     <asset:javascript src="bootstrap_confirm.js"/>
     <asset:javascript src="Chart.js"/>
+    <asset:javascript src="chartjs-plugin-datalabels.js"/>
 
     <style>
     a.step.nextLink.prevLink{
@@ -81,9 +82,20 @@
         width: auto;
     }
 
+    td {
+        text-align: center;
+    }
+
     #chart {
         height: 400px;
         width: 400px;
+    }
+    canvas {
+        background-color: rgba(47, 152, 208, 0.1);
+
+    }
+    .divContenedor:hover {
+        background: #9dc1d336;
     }
     </style>
 </head>
@@ -93,11 +105,12 @@
     <center>
         <div class="hero text-block-label" style="margin-top:5px">
             <label style="margin-top: 90px; color: white; background: rgba(0, 0, 0, 0.6); font-size: 20px" class="font-weight-bold">
-                    <p>¡Aqui tienes las estadisticas de cada una de tus mascotas!</p>
+                <p>¡Aqui tienes las estadisticas de cada una de tus mascotas!</p>
+                <p>Para ver una mascota detallada, presiona sobre: <i class="fas fa-chart-pie fa-2x"></i></p>
             </label>
         </div>
     </center>
-    <div id="div_con_mascota" name="div_con_mascota" class="container container-label align-self-start login-form" style="width: auto;display: block; justify-content: center; align-items: center;height: 415px;">
+    <div id="div_con_mascota" name="div_con_mascota" class="container container-label align-self-start login-form" style="width: auto;display: block; justify-content: center; align-items: center;height: auto;">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -108,10 +121,11 @@
                 <th>Encuentros Concretados</th>
                 <th>Me Gusta Recibidos</th>
                 <th>No Me Gusta Recibidos</th>
+                <th>Estadisticas</th>
             </tr>
             </thead>
             <tbody>
-            <g:each in="${estadisticas}" var="estadistica" status="counter">
+            <g:each in="${estadisticas}" var="estadistica" status="counterTest">
                 <tr>
                     <td scope="row"></td>
                     <td>${estadistica.mascota.nombre}</td>
@@ -120,132 +134,212 @@
                     <td>${estadistica.matchedCount}</td>
                     <td>${estadistica.findLikeCount}</td>
                     <td>${estadistica.findNotLikeCount}</td>
+                    <td><i id="icon-${counterTest}" class="fas fa-chart-pie" style="color:red" onclick="activeDesactive(id);showMePie('divContenedor${counterTest}');"></i></td>
                 </tr>
             </g:each>
             </tbody>
         </table>
     </div>
-
-</div>
-</div>
-<!--
-THe post that goes with this pen:
-https://codepen.io/k3no/post/learning-by-example-getting-started-with-chart-js
--->
-<div class="container">
-    <br />
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <!--       Chart.js Canvas Tag -->
-            <canvas id="mascotasCreadas"></canvas>
-        </div>
-        <div class="col-md-1"></div>
-    </div>
 </div>
 
-<div class="container">
-    <br />
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <!--       Chart.js Canvas Tag -->
-            <canvas id="barChart"></canvas>
+<g:if test="${graficos}">
+    <g:each in="${graficos}" var="graficoMascotasDiferencial" status="counter1">
+        <div id="divContenedor${counter1}" class="divContenedor">
+            <center>
+                <h3>Graficos de ${graficoMascotasDiferencial.nombre.first().split("_")[0]}</h3>
+                <ul class="inline" style="width: 100%;">
+                    <g:each in="${graficoMascotasDiferencial}" var="graficoMascotas">
+                        <li class="inline" style="width: 35%;">
+                            <canvas class="canvasGraficos" id="${graficoMascotas.nombre}"></canvas>
+                            <input type="hidden" id="jsonLabel${graficoMascotas.nombre}" data-json="${graficoMascotas.label}"/>
+                            <script>
+                                var ctx${graficoMascotas.nombre} = $("#${graficoMascotas.nombre}");
+                                Chart.defaults.global.defaultFontFamily = "Lato";
+                                Chart.defaults.global.defaultFontSize = 18;
+                                // Global Options:
+                                var label${graficoMascotas.nombre} = $("#jsonLabel${graficoMascotas.nombre}").attr("data-json");
+                                var data${graficoMascotas.nombre} = {
+                                    labels: jQuery.parseJSON(label${graficoMascotas.nombre}),
+                                    datasets: [
+                                        {
+                                            fill: true,
+                                            backgroundColor: [
+                                                "#"+((1<<24)*Math.random()|0).toString(16),
+                                                "#"+((1<<24)*Math.random()|0).toString(16)
+                                            ],
+                                            data: [${graficoMascotas.data.join(",")}],
+                                            // Notice the borderColor
+                                            borderColor: "white",
+                                            borderWidth: [2,2]
+                                        }
+                                    ]
+                                };
+
+                                var options${graficoMascotas.nombre} = {
+                                    title: {
+                                        display: true,
+                                        text: '${graficoMascotas.nombre.replace("_", " ")}',
+                                        position: 'top'
+                                    },
+                                    rotation: -0.7 * Math.PI,
+                                    legend: {
+                                        display: true,
+                                        position: "left",
+                                        labels: {
+                                            fontSize: 15,
+                                        }
+                                    },
+                                    plugins: {
+                                        datalabels: {
+                                            formatter: (value, ctx) => {
+                                            let datasets = ctx.chart.data.datasets;
+                                if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+                                    let sum = datasets[0].data.reduce((a, b) => a + b, 0);
+                                    let percentage = Math.round((value / sum) * 100) + '%';
+                                    return percentage;
+                                } else {
+                                    return percentage;
+                                }
+                                },
+                                color: '#fff',
+                                }
+                                }
+                                };
+
+                                var myBarChart${graficoMascotas.nombre} = new Chart(ctx${graficoMascotas.nombre}, {
+                                    type: 'pie',
+                                    data: data${graficoMascotas.nombre},
+                                    options: options${graficoMascotas.nombre}
+                                });
+                            </script>
+                        </li>
+                    </g:each>
+                <hr id="hr${counter1}" class="canvasGraficos">
+                </ul>
+            </center>
         </div>
-        <div class="col-md-1"></div>
-    </div>
+    </g:each>
+</g:if>
+<hr>
+
+<center>
+    <h3>Graficos Estadisticos Generales <i id="icon-${counterTest}" class="fas fa-chart-pie" style="color:green" onclick="activeDesactive(id); showPieAcumulado('divContenedorAcumulado')"></i></h3>
+</center>
+<div id="divContenedorAcumulado" class="divContenedorAcumulado" style="display: block">
+    <center>
+        <ul class="inline" style="width: 100%;">
+            <g:each in="${graficosAcumulados}" var="graficoAcumulado" status="counterAcumulado">
+                <li class="inline" style="width: 35%;">
+                    <canvas id="${graficoAcumulado.nombre}"></canvas>
+                    <input type="hidden" id="jsonLabel${graficoAcumulado.nombre}" data-json="${graficoAcumulado.label}"/>
+                    <script>
+                        var ctx${counterAcumulado} = $("#${graficoAcumulado.nombre}");
+                        Chart.defaults.global.defaultFontFamily = "Lato";
+                        Chart.defaults.global.defaultFontSize = 18;
+                        Chart.defaults.global.plugins.datalabels.anchor = 'center';
+                        Chart.defaults.global.plugins.datalabels.align = 'center';
+                        Chart.defaults.global.plugins.datalabels.color = 'black';
+                        // Global Options:
+                        var label${counterAcumulado} = $("#jsonLabel${graficoAcumulado.nombre}").attr("data-json");
+                        var data${counterAcumulado} = {
+                            labels: jQuery.parseJSON(label${counterAcumulado}),
+                            datasets: [
+                                {
+                                    fill: true,
+                                    backgroundColor: [
+                                        "#"+((1<<24)*Math.random()|0).toString(16),
+                                        "#"+((1<<24)*Math.random()|0).toString(16)],
+                                    data: [${graficoAcumulado.data.join(",")}],
+                                    // Notice the borderColor
+                                    borderColor: 'white',
+                                    borderWidth: [2,2]
+                                }
+                            ]
+                        };
+
+                        var options${counterAcumulado} = {
+                            title: {
+                                display: true,
+                                text: '${graficoAcumulado.nombre.replace("_", " ")}',
+                                position: 'top',
+                                fontSize: 15
+                            },
+                            rotation: -0.7 * Math.PI,
+                            legend: {
+                                display: true,
+                                position: "left",
+                                labels: {
+                                    fontSize: 15,
+                                }
+                            },
+                            plugins: {
+                                datalabels: {
+                                    formatter: (value, ctx) => {
+                                    let datasets = ctx.chart.data.datasets;
+                        if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+                            let sum = datasets[0].data.reduce((a, b) => a + b, 0);
+                            let percentage = Math.round((value / sum) * 100) + '%';
+                            return percentage;
+                        } else {
+                            return percentage;
+                        }
+                        },
+                        color: '#fff',
+                        }
+                        }
+                        };
+
+                        var myBarChart${counterAcumulado} = new Chart(ctx${counterAcumulado}, {
+                            type: 'pie',
+                            data: data${counterAcumulado},
+                            options: options${counterAcumulado},
+
+                        });
+                    </script>
+                </li>
+            </g:each>
+            <hr>
+        </ul>
+    </center>
 </div>
 
 <script>
-    var ctxMascotasCreadas = $("#mascotasCreadas");
-    var mascotasCreadas = new Chart(ctxMascotasCreadas, {
-        type: 'line',
-        data: {
-            labels: [new Date("2015-3-15 13:3").toLocaleString(), new Date("2015-3-25 13:2").toLocaleString(), new Date("2015-4-25 14:12").toLocaleString()],
-            datasets: [{
-                label: 'Demo',
-                data: [{
-                    t: new Date("2015-3-15 13:3"),
-                    y: 12
-                },
-                    {
-                        t: new Date("2015-3-25 13:2"),
-                        y: 21
-                    },
-                    {
-                        t: new Date("2015-4-25 14:12"),
-                        y: 32
-                    }
-                ],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
+
+    function activeDesactive(id) {
+        if($("#"+id).css( "color").toString() == "rgb(255, 0, 0)") {
+            $("#"+id).css( "color", "rgb(0, 128, 0)" );
+            return
         }
-    });
 
-    var ctx = $("#barChart");
-    Chart.defaults.global.defaultFontFamily = "Lato";
-    Chart.defaults.global.defaultFontSize = 18;
-    // Global Options:
-    var data = {
-        labels: ["Me Gusta", "No Me Gusta", "Encuentros Concretados", "Me Gusta Recibidos", "No Me Gusta Recibidos"],
-        datasets: [
-            {
-                fill: true,
-                backgroundColor: [
-                    'green',
-                    'red',
-                    'black',
-                    'orange',
-                    'pink',
-                    'blue',
-                    'gray',
-                    'white'],
-                data: [${estadisticas.last().likeCount}, ${estadisticas.last().notLikeCount}, ${estadisticas.last().matchedCount}, ${estadisticas.last().matchedCount}, ${estadisticas.last().findLikeCount}, ${estadisticas.last().findNotLikeCount}],
-// Notice the borderColor
-                borderColor:	['black', 'black'],
-                borderWidth: [2,2]
-            }
-        ]
-    };
+        if($("#"+id).css( "color").toString() == "rgb(0, 128, 0)") {
+            $("#"+id).css( "color", "rgb(255, 0, 0)" );
+            return
+        }
+    }
+    function hideAllCanvas() {
+        $( ".divContenedor" ).each(function( index ) {
+            $(this).hide();
+        });
+    }
 
-    // Notice the rotation from the documentation.
-
-    var options = {
-        title: {
-            display: true,
-            text: 'Estadisticas para ${estadisticas.last().mascota.nombre}',
-            position: 'top'
-        },
-        rotation: -0.7 * Math.PI,
-    };
-
-
-    // Chart declaration:
-    var myBarChart = new Chart(ctx, {
-        type: 'pie',
-        data: data,
-        options: options
-    });
-
-    // Fun Fact: I've lost exactly 3 of my favorite T-shirts and 2 hoodies this way :|
+    function showPieAcumulado(nombre) {
+        if($( "#"+nombre ).css("display") == "block") {
+            $("#"+nombre).hide();
+        } else {
+            $("#"+nombre).show();
+            document.querySelector('#'+nombre).scrollIntoView();
+        }
+    }
+    function showMePie(nombre) {
+        if($( "#"+nombre ).css("display") == "block") {
+            $("#"+nombre).hide();
+        } else {
+            $("#"+nombre).show();
+            document.querySelector('#'+nombre).scrollIntoView();
+        }
+    }
+    hideAllCanvas();
 
 </script>
 </body>
 </html>
-

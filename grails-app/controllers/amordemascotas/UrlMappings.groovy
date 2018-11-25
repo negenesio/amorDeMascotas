@@ -16,6 +16,7 @@ class UrlMappings {
         "/conocer-plus"(controller: "conocerPlus", action: "conocerPlus")
         "/login"(view:"/login/auth")
         "/encuentro/chat"(controller: "administrator", action: "chat")
+        "/encuentro/chat/historicos"(controller: "administrator", action: "chatHistoricos")
         "/encuentro/chat/enviar-mensaje"(controller: "chat", action: "submitMessage")
         "/encuentro/chat/obtener-mensaje"(controller: "chat", action: "retrieveLatestMessages")
         "/encuentro/finalizar"(controller: "encuentro", action: "finalizar")
@@ -27,6 +28,7 @@ class UrlMappings {
         "/encuentro/concretados"(controller: "encuentro", action: "encuentroMatchedIndex")
         "/encuentro/busqueda/$mascotaId"(controller: "encuentro", action: "encuentroBusqueda")
         "/estadisticas/mascotas"(controller: "estadisticasMascota", action: "estadisticasIndex")
+        "/estadisticas/admin/mascotas"(controller: "estadisticasMascota", action: "estadisticasAdminMascotas")
         "500"(view:'/error')
         "404"(view:'/notFound')
     }

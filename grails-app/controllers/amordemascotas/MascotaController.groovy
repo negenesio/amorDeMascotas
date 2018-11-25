@@ -1,5 +1,6 @@
 package amordemascotas
 
+import com.amordemascotas.EstadisticasMascota
 import com.amordemascotas.Imagenes
 import com.amordemascotas.Mascota
 import com.amordemascotas.Raza
@@ -14,7 +15,7 @@ class MascotaController {
     def springSecurityService;
     def imagenesService;
     def grailsResourceLocator;
-    EstadisticasMascotaController estadisticasController
+    EstadisticasMascotaService estadisticasMascotaService
 
 
     @Secured('isAuthenticated()')
@@ -34,7 +35,7 @@ class MascotaController {
 
         Mascota mascota = mascotaService.crearMascota(name, fechaNacimiento, sexo, raza, descripcion)
         if(mascota) {
-            estadisticasController.createEstadisticas(mascota, mascota.user)
+            estadisticasMascotaService.createEstadisticas(mascota, mascota.user)
             return render(status:201, text:([success:true, mascotaId:mascota.id] as JSON).toString(),contentType: 'application/json')
         } else {
             result.success = false
@@ -119,26 +120,32 @@ class MascotaController {
         User user = springSecurityService.getCurrentUser();
         Long id = params.mascotaId.toLong()
         Mascota mascota = Mascota.findByUserAndId(user, id);
-        if (mascota) {
-            List<Imagenes> imagenesList = Imagenes.findAllByMascota(mascota)
-            imagenesList.each { imagen ->
-                imagen.delete(flush:true)
-                if (imagen.hasErrors()) {
-                    imagen.errors.allErrors.each {
+        List<EstadisticasMascota> estadisticasMascota = EstadisticasMascota.findAllByMascota(mascota);
+        if (estadisticasMascota) {
+            estadisticasMascota.forEach { estadostica ->
+                estadostica.delete(flush: true);
+            }
+            if (mascota) {
+                List<Imagenes> imagenesList = Imagenes.findAllByMascota(mascota)
+                imagenesList.each { imagen ->
+                    imagen.delete(flush: true)
+                    if (imagen.hasErrors()) {
+                        imagen.errors.allErrors.each {
+                        }
+                        return render("false")
                     }
-                    return render ("false")
                 }
-            }
 
-            mascota.delete(flush: true)
-            if (mascota.hasErrors()) {
-                mascota.errors.allErrors.each {
+                mascota.delete(flush: true)
+                if (mascota.hasErrors()) {
+                    mascota.errors.allErrors.each {
+                    }
+                    return render("false")
                 }
-                return render ("false")
-            }
 
-            //return redirect(controller: 'administrator', action: 'index')
-            return render ("true")
+                //return redirect(controller: 'administrator', action: 'index')
+                return render("true")
+            }
         }
     }
 }

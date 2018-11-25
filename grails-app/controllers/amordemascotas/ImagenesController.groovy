@@ -2,7 +2,6 @@ package amordemascotas
 
 import com.amordemascotas.Imagenes
 import grails.plugin.springsecurity.annotation.Secured
-import org.springframework.core.io.Resource
 import org.grails.core.io.ResourceLocator
 
 

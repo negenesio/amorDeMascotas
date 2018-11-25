@@ -1,5 +1,6 @@
 package amordemascotas
 
+import com.amordemascotas.ChatMessage
 import com.amordemascotas.Encuentros
 import com.amordemascotas.HistoricosEncuentros
 import com.amordemascotas.Imagenes
@@ -60,6 +61,12 @@ class EncuentroController {
     @Secured('isAuthenticated()')
     def chat() {
         println params
+        if(params.historicoId) {
+            HistoricosEncuentros historicosEncuentros = HistoricosEncuentros.findById(params.historicoId);
+            Encuentros encuentro = Encuentros.findByMascotaOwnerAndMascotaFindAndUserFindAndUserOwner(historicosEncuentros.mascotaOwner, historicosEncuentros.mascotaFind, historicosEncuentros.userFind, historicosEncuentros.userOwner);
+            return render(view: "_chatHistoricos", model:[encuentro:encuentro])
+        }
+
         Encuentros encuentro = Encuentros.findById(params.encuentro.toLong())
         if(params.chat){
             NotificacionesChats notificacionesChats = NotificacionesChats.findById(params.chat.toLong());

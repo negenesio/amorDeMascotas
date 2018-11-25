@@ -82,6 +82,7 @@
             </g:if>
             <g:else>
                 <p>¡Aqui puedes recordar, con quien estableciste contacto!</p>
+                <p>¡Y revisar el historial de chat!</p>
             </g:else>
             </label>
         </div>
@@ -94,6 +95,7 @@
                     <th>Nombre Mascotas</th>
                     <th>Fecha Finalizacion</th>
                     <th>Dueñ@</th>
+                    <th>Historial de Chat</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -109,6 +111,7 @@
                             <g:else>
                                 <td>${historicos.userFind.name}</td>
                             </g:else>
+                            <td><center><i style="font-size: 20px;color: #00b400;padding-left: 15px" class="far fa-comments" onclick="openHistorico('${historicos.id}');"></i></center></td>
                         </tr>
                 </g:each>
                 </tbody>
@@ -121,6 +124,37 @@
 
 </div>
 </div>
+
+<button id="modal-chat" name="modal-chat" style="display: none" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-new">
+    open modal
+</button>
+
+<div id="modal" class="modal fade bs-example-modal-new" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+
+    <div id="modal-data">
+
+    </div>
+
+</div>
+<script>
+    function openHistorico(historicoId) {
+        jQuery.ajax({
+            type:'GET',
+            data: 'historicoId='+historicoId,
+            url:'/encuentro/chat/historicos',
+            success:function(data,textStatus)
+            {
+                $("#modal-data").html(data);
+            },
+            error:
+                function(XMLHttpRequest,textStatus,errorThrown){
+                    window.location.href = "/home";
+                }
+        });
+
+        $("#modal-chat").click();
+    }
+</script>
 </body>
 </html>
 

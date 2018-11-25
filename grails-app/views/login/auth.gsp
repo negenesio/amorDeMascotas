@@ -71,6 +71,9 @@
                         </center>
                     </label>
                     <input type="submit" class="btn btn-info btn-block form-control col-md-3" type="submit" value="Iniciar Sesion"/> <a href="/registration" class="link_home"> Registrarse</a>
+                    <g:if test="${params.login_error}">
+                        <label id="error-label" style="margin-left: 140px; margin-top: 15px;color: red;">Contraseña o Usuario incorrecto...</label>
+                    </g:if>
                     <label style="margin-left: 140px; margin-top: 15px"><a href="/recovery-password">¿Has olvidado los datos de la cuenta?</a></label>
                 </div>
             </div>
@@ -80,6 +83,7 @@
 </div>
 
 <script>
+    $("#error").hide();
     (function() {
         document.forms['login_form'].elements['${'username'}'].focus();
     })();

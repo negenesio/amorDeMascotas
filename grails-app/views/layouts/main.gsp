@@ -28,6 +28,11 @@
 
     <g:layoutHead/>
 
+    <style>
+        b {
+            font-size: 17px;
+        }
+    </style>
 
 </head>
 <body>
@@ -102,11 +107,20 @@
                         </a>
                     </li>
                 </g:if>
+                <sec:ifNotGranted roles='ROLE_ADMIN'>
                 <li class="nav-item ${request.getRequestURL().toString().contains('/estadisticas/mascotas') ? 'active' : ''}">
                     <a style="padding-left: 10px" class="nav-link" href="/estadisticas/mascotas">
                         <b>Estadisticas</b>
                     </a>
                 </li>
+                </sec:ifNotGranted>
+                <sec:ifAnyGranted roles='ROLE_ADMIN'>
+                    <li class="nav-item ${request.getRequestURL().toString().contains('/estadisticas/admin/mascotas') ? 'active' : ''}">
+                        <a style="padding-left: 10px" class="nav-link" href="/estadisticas/admin/mascotas">
+                            <font style="font-size: 15px;color: gold"><b>Admin Estadisticas</b></font>
+                        </a>
+                    </li>
+                </sec:ifAnyGranted>
             </ul>
         </sec:ifLoggedIn>
         <sec:ifNotLoggedIn>

@@ -156,7 +156,9 @@
                                             <font style="color:green">Chat</font>
                                         </a>
 
-                                    <span data-toggle="finalizar" data-popout="true" data-id="${encuentro.encuentro.id}" style="font-size: 18px; color: indianred; cursor: pointer"><i class="fas fa-power-off" style="color: indianred"></i></span>
+                                    <span data-toggle="finalizar" data-popout="true" data-id="${encuentro.encuentro.id}" style="font-size: 18px; color: indianred; cursor: pointer">
+                                        <i class="fas fa-power-off" style="color: indianred"></i>
+                                    </span>
                                 </td>
                             </g:else>
                     </tr>
