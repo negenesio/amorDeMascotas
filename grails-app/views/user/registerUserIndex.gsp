@@ -93,8 +93,8 @@ data: function(validator) {
         <fieldset style="display: flex; justify-content: center; align-items: center">
 
             <!-- Form Name -->
-            <legend>
-                <i style="color:black" class="fa fa-paw fa-5x pull-left" aria-hidden="true"></i>
+            <legend style="display: block;">
+                <i style="color:black" class="fa fa-paw fa-4x pull-left" aria-hidden="true"></i>
                 <label style="font-size: 20px">Amor de</label>
                 <label style="color: black; font-size: 25px"> Mascotas</label>
             </legend>

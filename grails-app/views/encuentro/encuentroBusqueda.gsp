@@ -128,10 +128,12 @@
     }
 
     .color-hembra {
+        width: 500px;
         background-color: #f5c6cb;
     }
 
     .color-macho {
+        width: 500px;
         background-color: #9dc1d3;
     }
 

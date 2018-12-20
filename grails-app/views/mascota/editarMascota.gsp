@@ -156,8 +156,8 @@
     <div class="tab">
             <div class="mx-auto" style="width: 500px; background-color: #f8f9fa; margin-top: 20px">
                 <!-- Form Name -->
-                <legend>
-                    <i style="color:black" class="fa fa-paw fa-5x pull-left" aria-hidden="true"></i>
+                <legend style="display: block">
+                    <i style="color:black" class="fa fa-paw fa-4x pull-left" aria-hidden="true"></i>
                     <label style="font-size: 20px">Amor de</label>
                     <label style="color: black; font-size: 25px"> Mascotas</label>
                 </legend>

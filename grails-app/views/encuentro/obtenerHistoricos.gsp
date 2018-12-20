@@ -103,14 +103,14 @@
                         <tr>
                             <td scope="row"></td>
                             <td>${historicos.mascotaOwner.nombre} <i class="fas fa-heart" style="color: indianred"></i> ${historicos.mascotaFind.nombre} </td>
-                            <td>${historicos.fechaCreacion.format("dd/mm/YYYY")}</td>
+                            <td>${historicos.fechaCreacion.format("dd/MM/YYYY")}</td>
                             <g:set var="userCurrent" value="${User.findByUsername(sec.username())}"/>
                             <g:if test="${historicos.userOwner.username != userCurrent.username}">
                                 <td>${historicos.userOwner.name}</td>
                             </g:if>
                             <g:else>
                                 <td>${historicos.userFind.name}</td>
-                            </g:else>
+                            </g:else>fa fa-paw fa-4x pull-left
                             <td><center><i style="font-size: 20px;color: #00b400;padding-left: 15px" class="far fa-comments" onclick="openHistorico('${historicos.id}');"></i></center></td>
                         </tr>
                 </g:each>

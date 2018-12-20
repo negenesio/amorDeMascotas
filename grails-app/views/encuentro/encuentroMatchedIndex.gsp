@@ -134,7 +134,7 @@
                         <td>${encuentro.encuentro.mascotaOwner.nombre} <i class="fas fa-heart" style="color: indianred"></i> ${encuentro.encuentro.mascotaFind.nombre}</td>
                         <td>${new Date().format('YYYY').toLong() - encuentro.encuentro.mascotaOwner.fechaNacimiento.format('YYYY').toLong()} - ${new Date().format('YYYY').toLong() - encuentro.encuentro.mascotaFind.fechaNacimiento.format('YYYY').toLong()}</td>
                         <td>${encuentro.encuentro.mascotaOwner.raza.descripcion}</td>
-                            <td>${encuentro.encuentro.fechaCreacion.format('dd/mm/YYYY')}</td>
+                            <td>${encuentro.encuentro.fechaCreacion.format('dd/MM/YYYY')}</td>
                         <g:if test="${encuentro.chat != null && encuentro.chat.contador != 0}">
                         <td class="dots" style="font-size: 20px;width: 150px;">
                             <span style="color:green" data-toggle="matched" data-popout="true" data-id="${encuentro.encuentro.mascotaOwner.id}" data-encuentro="${encuentro.encuentro.id}" data-is-chat="true" data-chat="${encuentro.chat.id}" style="font-size: 18px; color: indianred; cursor: pointer">

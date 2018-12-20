@@ -9,25 +9,13 @@
 </head>
 <body>
 
-%{--<sec:ifNotLoggedIn>
-    <g:link controller='login' action='auth'>Login</g:link>
-</sec:ifNotLoggedIn>
-
-<sec:ifLoggedIn>
-    <a href="/logoff">Logout</a>
-</sec:ifLoggedIn>
-
-<sec:ifAnyGranted roles='ROLE_ADMIN'>
-   ERES ADMIN
-</sec:ifAnyGranted>--}%
-
 <div id="div_index" name="div_index" class="container align-self-start login-form" style="display: block; justify-content: center; align-items: center">
     <form action="${postUrl ?: '/login/authenticate'}" method="POST" id="login_form" role="login" autocomplete="off">
         <fieldset style="display: flex; justify-content: center; align-items: center">
 
             <!-- Form Name -->
-            <legend>
-                <i style="color:black" class="fa fa-paw fa-5x pull-left" aria-hidden="true"></i>
+            <legend style="display: block">
+                <i style="color:black" class="fa fa-paw fa-4x pull-left" aria-hidden="true"></i>
                 <label style="font-size: 20px">Amor de</label>
                 <label style="color: black; font-size: 25px"> Mascotas</label>
             </legend>

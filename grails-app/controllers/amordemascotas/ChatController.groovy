@@ -13,11 +13,21 @@ class ChatController {
 
     @Secured('isAuthenticated()')
     def retrieveLatestMessages() {
-        User user = springSecurityService.getCurrentUser()
         Encuentros encuentro = Encuentros.findById(params.encuentro.toLong())
         Encuentros encuentroFind = Encuentros.findByMascotaOwnerAndMascotaFindAndStatus(encuentro.mascotaFind, encuentro.mascotaOwner, "matched")
         def messages = ChatMessage.findAllByEncuentroInList([encuentro, encuentroFind] , [order: 'desc', max:15, sort: 'id']);
+
         [messages:messages.reverse()]
+
+    }
+
+    @Secured('isAuthenticated()')
+    def retrieveLatestMessagesFinished() {
+        Encuentros encuentro = Encuentros.findById(params.encuentro.toLong())
+        Encuentros encuentroFind = Encuentros.findByMascotaOwnerAndMascotaFindAndStatus(encuentro.mascotaFind, encuentro.mascotaOwner, "finished")
+        def messages = ChatMessage.findAllByEncuentroInList([encuentro, encuentroFind] , [order: 'desc', max:15, sort: 'id']);
+
+        return render(view: 'retrieveLatestMessages', model: [messages:messages.reverse()])
 
     }
 

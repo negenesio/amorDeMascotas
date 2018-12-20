@@ -8,19 +8,19 @@
 </head>
 <body>
 <div id="div_recovery_password_token" name="div_recovery_password_token" class="container align-self-start login-form" style="display: block; justify-content: center; align-items: center">
-    <i id="tooltip_recovery_password_token" name="tooltip_recovery_password_token" style="margin-left: 520px; margin-top: 15px" class="fa fa-info-circle fa-2x" data-toggle="tooltip" data-placement="right" title="¡Hemos enviado el codigo a tu E-Mail!"></i>
+    <i id="tooltip_recovery_password_token" name="tooltip_recovery_password_token" style="margin-left: 520px; margin-top: 15px" class="fa fa-info-circle fa-2x" data-toggle="tooltip" data-placement="left" title="¡Hemos enviado el codigo a tu E-Mail!"></i>
     <form action="${createLink(controller: 'user', action: 'recoveryPasswordValidToken')}" method="POST" id="recovery_password_token_form" role="login" autocomplete="off">
         <fieldset style="display: flex; justify-content: center; align-items: center">
             <input type="hidden" name="username_recovery" id="username_recovery" value="${username}" class="form-control col-md-6" type="text">
             <!-- Form Name -->
-            <legend>
-                <i style="color:black" class="fa fa-paw fa-5x pull-left" aria-hidden="true"></i>
+            <legend style="display: block">
+                <i style="color:black" class="fa fa-paw fa-4x pull-left" aria-hidden="true"></i>
                 <label style="font-size: 20px">Amor de</label>
                 <label style="color: black; font-size: 25px"> Mascotas</label>
             </legend>
 
             <legend style="margin-bottom: 0px;">
-                <label style="font-size: 15px; margin-left: 80px; font-weight: bold;">Validacion Codigo de Seguridad </label>
+                <label style="font-size: 15px; margin-left: -80px; font-weight: bold;">Validacion Codigo de Seguridad </label>
             </legend>
             <!-- Text input token-->
             <div class="form-group">
@@ -56,19 +56,19 @@
 </div>
 
 <div id="div_recovery_password_change" name="div_recovery_password_change" class="container align-self-start login-form" style="display: none; justify-content: center; align-items: center">
-    <i id="tooltip_recovery_password_change" name="tooltip_recovery_password_change" style="margin-left: 520px; margin-top: 15px" class="fa fa-info-circle fa-2x" data-toggle="tooltip" data-placement="right" title="¡Todo Listo, ya puedes elegir una contraseña nueva!"></i>
+    <i id="tooltip_recovery_password_change" name="tooltip_recovery_password_change" style="margin-left: 520px; margin-top: 15px" class="fa fa-info-circle fa-2x" data-toggle="tooltip" data-placement="left" title="¡Todo Listo, ya puedes elegir una contraseña nueva!"></i>
     <form action="${createLink(controller: 'user', action: 'recoveryPasswordChange')}" method="POST" id="recovery_password_change_form" role="login" autocomplete="off">
         <fieldset style="display: flex; justify-content: center; align-items: center">
 
             <!-- Form Name -->
-            <legend>
-                <i style="color:black" class="fa fa-paw fa-5x pull-left" aria-hidden="true"></i>
+            <legend style="display: block">
+                <i style="color:black" class="fa fa-paw fa-4x pull-left" aria-hidden="true"></i>
                 <label style="font-size: 20px">Amor de</label>
                 <label style="color: black; font-size: 25px"> Mascotas</label>
             </legend>
 
             <legend style="margin-bottom: 0px;">
-                <label style="font-size: 15px; margin-left: 80px; font-weight: bold;">Validacion Codigo de Seguridad </label>
+                <label style="font-size: 15px; margin-left: -80px; font-weight: bold;">Validacion Codigo de Seguridad </label>
             </legend>
 
             <!-- Text input Username-->
@@ -221,6 +221,7 @@
             submitHandler: function(validator, form, submitButton) {
                 $("#div_recovery_password_token").hide();
                 $("#tooltip_recovery_password_token").hide();
+                $("#tooltip_recovery_password_token").tooltip('hide');
                 $("#tooltip_recovery_password_change").tooltip('show');
                 $("#div_recovery_password_change").show();
                 $('#password_change').focus();

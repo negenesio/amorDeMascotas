@@ -17,7 +17,7 @@
             jQuery.ajax({
                 type:'GET',
                 data:'encuentro='+${encuentro.id},
-                url:'/encuentro/chat/obtener-mensaje',
+                url:'/encuentro/chat/obtener-mensaje-historicos',
                 success:function(data,textStatus)
                 {
                     $("#chatMessages").html(data);

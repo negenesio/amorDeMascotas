@@ -19,6 +19,7 @@ class UrlMappings {
         "/encuentro/chat/historicos"(controller: "administrator", action: "chatHistoricos")
         "/encuentro/chat/enviar-mensaje"(controller: "chat", action: "submitMessage")
         "/encuentro/chat/obtener-mensaje"(controller: "chat", action: "retrieveLatestMessages")
+        "/encuentro/chat/obtener-mensaje-historicos"(controller: "chat", action: "retrieveLatestMessagesFinished")
         "/encuentro/finalizar"(controller: "encuentro", action: "finalizar")
         "/encuentro/historicos"(controller: "encuentro", action: "obtenerHistoricos")
         "/recovery-password"(view:"/user/recoveryPassword")
